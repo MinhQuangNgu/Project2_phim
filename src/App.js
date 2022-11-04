@@ -6,11 +6,13 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { publicRouter } from './routes/Routes';
+import Header from './components/header/Header';
 
 function App() {
   return (
     <Router>
         <div className="App">
+          <Header />
             <Routes>
                 {publicRouter.map(item => {
                     const Page = item.element;

@@ -1,0 +1,103 @@
+.swiperCard_container{
+    width: 100%;
+    height: 15rem;
+    background-color: black;
+    position: relative;
+    overflow: hidden;
+}
+.swiperCard_link-container{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.swiperCard_image{
+    transition: all ease 0.2s;
+}
+.swiperCard_link-container:hover .swiperCard_image{
+    transform: scale(1.1);
+}
+.swiperCard_title{
+    position: absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    height: 3.5rem;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.swiperCard_title > p{
+    color:white;
+    font-size: 1.2rem;
+    margin:0;
+}
+.card_container{
+    width: 100%;
+    height: 15rem;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    position: relative;
+}
+.card_image-container{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.card_image-container > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all ease 0.2s;
+}
+.card_image-container:hover .card_image{
+    transform: scale(1.1);
+}
+.card_title-container{
+    position: absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    height: 3.5rem;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.card_title-container > p{
+    margin:0;
+    font-size: 1.3rem;
+    color:white;
+    font-weight: 700;
+}
+.card_detail-container{
+    position: absolute;
+    top:0.2rem;
+    left:0.1rem;
+    height: 2.6rem;
+    background-image: linear-gradient(90deg,#12c2e9, #c471ed, #f64f59);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    padding:0 1rem;
+    font-size: 1.1rem;
+    color: white;
+    padding-bottom: 0.3rem;
+    font-weight: 800;
+}
+.cardSwiper_detail-container{
+    position: absolute;
+    top:0.2rem;
+    left:0.1rem;
+    height: 2.3rem;
+    background-image: linear-gradient(90deg,#12c2e9, #c471ed, #f64f59);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    padding:0 1rem;
+    font-size: 1.1rem;
+    color: white;
+    padding-bottom: 0.3rem;
+    font-weight: 800;
+}

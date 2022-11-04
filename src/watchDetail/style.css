@@ -1,0 +1,81 @@
+.watch_wrap{
+    width: 100%;
+    margin-top: 3rem;
+}
+.watch_top_content{
+    width: 100%;
+    display: flex;
+    background-color: #252525;
+    align-items: center;
+    padding:1rem 1rem;
+    list-style: none;
+}
+.watch_top-items{
+    padding:1rem 0.5rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color:white;
+    text-transform: uppercase;
+    word-spacing: 0.1rem;
+}
+.watch_top-items:hover{
+    background-color: rgba(0,0,0,0.4);
+}
+.watcher_container{
+    margin-top: 1rem;
+    width: 100%;
+    min-height: 10rem;
+    background-color: #252525;
+    padding:1rem;
+}
+.episode_container{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.episode_items{
+    min-width: 7rem;
+    height:3.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:white;
+    font-size: 1.6rem;
+    font-weight: 700;
+    border-radius: 1rem;
+    cursor: pointer;
+    padding-bottom: 0.3rem;
+    margin-right: 1rem;
+    margin-bottom: 1.5rem;
+    background-color: #3A3A3A;
+}
+.episode_items.active{
+    background-color: rgb(255,150,1);
+}
+.episode_items:hover{
+    background-color: rgb(255,150,1);
+}
+.link_episode{
+    text-decoration: none;
+}
+.watcher_name_wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin:3rem 0;
+}
+.watcher_name_wrap > h3{
+    font-size: 2rem;
+    text-transform: uppercase;
+    color:rgb(255,150,1);
+    font-weight: 800;
+}
+.comment_container{
+    margin-top: 1rem;
+    width: 100%;
+    min-height: 5rem;
+    background-color: white;
+}
