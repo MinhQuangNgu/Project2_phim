@@ -22,14 +22,38 @@ const Watch = () => {
                         </Link>
                     </ul>
                     <div className="watcher_container">
-                        <iframe
-                            width="100%"
-                            height="550"
-                            src="https://short.ink/fU4n6-aTxq"
-                            frameborder="0"
-                            scrolling="0"
-                            allowfullscreen
-                        ></iframe>
+                        <div className="row">
+                            <div className="col c-12 m-0 l-0">
+                                <iframe
+                                    width="100%"
+                                    height="200"
+                                    src="https://short.ink/fU4n6-aTxq"
+                                    frameborder="0"
+                                    scrolling="0"
+                                    allowfullscreen
+                                ></iframe>
+                            </div>
+                            <div className="col c-0 m-12 l-0">
+                                <iframe
+                                    width="100%"
+                                    height="450"
+                                    src="https://short.ink/fU4n6-aTxq"
+                                    frameborder="0"
+                                    scrolling="0"
+                                    allowfullscreen
+                                ></iframe>
+                            </div>
+                            <div className="col c-0 m-0 l-12">
+                                <iframe
+                                    width="100%"
+                                    height="550"
+                                    src="https://short.ink/fU4n6-aTxq"
+                                    frameborder="0"
+                                    scrolling="0"
+                                    allowfullscreen
+                                ></iframe>
+                            </div>
+                        </div>
                         <div className="watcher_name_wrap">
                             <h3>Phi Cơ Siêu Đẳng (Mavel Rick 2022)</h3>
                         </div>

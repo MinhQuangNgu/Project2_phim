@@ -1,14 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./style.css";
 
 const MovieDetail = () => {
     const { slug } = useParams();
 
+    const trailerRef = useRef();
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [slug]);
 
+    const handleScroll = () => {
+        if (trailerRef) {
+            trailerRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        }
+    };
     return (
         <div className="movie_detail_container">
             <div className="grid wideS">
@@ -30,7 +40,10 @@ const MovieDetail = () => {
                                     <h2>Cho Kẹo Hay Bị Ghẹo Scooby Doo</h2>
                                 </div>
                                 <div className="movie_infor_detail_button_container">
-                                    <button className="movie_infor_detail_button_trailer">
+                                    <button
+                                        onClick={handleScroll}
+                                        className="movie_infor_detail_button_trailer"
+                                    >
                                         Trailer
                                     </button>
                                     <Link to="/xem-phim/asds">
@@ -100,6 +113,43 @@ const MovieDetail = () => {
                                     thăng chức, điều khiến anh cảm thấy bị bó
                                     buộc, để trở về làm chính mình.
                                 </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div ref={trailerRef} className="trailer_container">
+                        <div className="row">
+                            <div className="col c-12 m-0 l-0">
+                                <iframe
+                                    width="100%"
+                                    height="200"
+                                    src="https://www.youtube.com/embed/giXco2jaZ_4"
+                                    title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                ></iframe>
+                            </div>
+                            <div className="col c-0 m-0 l-12">
+                                <iframe
+                                    width="100%"
+                                    height="600"
+                                    src="https://www.youtube.com/embed/giXco2jaZ_4"
+                                    title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                ></iframe>
+                            </div>
+                            <div className="col c-0 m-12 l-0">
+                                <iframe
+                                    width="100%"
+                                    height="400"
+                                    src="https://www.youtube.com/embed/giXco2jaZ_4"
+                                    title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                ></iframe>
                             </div>
                         </div>
                     </div>

@@ -63,6 +63,7 @@
 .movie_infor_detail_button_trailer:hover{
     background-color: aqua;
 }
+
 .movie_infor_detail_button_watch{
     width: 15rem;
     border:none;
@@ -73,6 +74,33 @@
 .movie_infor_detail_button_watch:hover{
     background-color: orange;
 }
+
+
+@media only screen and (max-width:450px){
+    .movie_infor_detail_button_trailer{
+        width: 8rem;
+    }
+    .movie_infor_detail_button_watch{
+        width: 12rem;
+        border:none;
+        color:white;
+        font-size: 1.7rem;
+        background-color: rgb(228, 165, 46);
+    }
+    .movie_infor_detail_title > h1{
+        font-size: 1.4rem;
+    }
+    .movie_infor_detail_enTitle > h2{
+        font-size: 1.2rem;
+    }
+    .movie_infor_detail_image_container > img{
+        width: 20rem;
+    }
+    .movie_infor_detail_image_container{
+        height: 10rem;
+    }
+}
+
 .movie_infor-more_container{
     background-color: #252525;
     margin-top: 2rem;
@@ -136,4 +164,9 @@
     height: 10rem;
     background-color: white;
     margin-top: 2rem;
+}
+.trailer_container{
+    margin-top: 2rem;
+    width: 100%;
+    min-height: 20rem;
 }
