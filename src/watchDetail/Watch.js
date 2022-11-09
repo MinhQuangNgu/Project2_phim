@@ -30,7 +30,7 @@ const Watch = () => {
                                     src="https://short.ink/fU4n6-aTxq"
                                     frameborder="0"
                                     scrolling="0"
-                                    allowfullscreen
+                                    allowFullScreen
                                 ></iframe>
                             </div>
                             <div className="col c-0 m-12 l-0">
@@ -40,7 +40,7 @@ const Watch = () => {
                                     src="https://short.ink/fU4n6-aTxq"
                                     frameborder="0"
                                     scrolling="0"
-                                    allowfullscreen
+                                    allowFullScreen
                                 ></iframe>
                             </div>
                             <div className="col c-0 m-0 l-12">
@@ -50,7 +50,7 @@ const Watch = () => {
                                     src="https://short.ink/fU4n6-aTxq"
                                     frameborder="0"
                                     scrolling="0"
-                                    allowfullscreen
+                                    allowFullScreen
                                 ></iframe>
                             </div>
                         </div>

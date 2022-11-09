@@ -2,6 +2,8 @@
     background-color: #1A1A1A;
     width: 100%;
     min-height: 100vh;
+    position: relative;
+    overflow: hidden;
 }
 .w_100{
     width: 100%;

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./style.css";
-function Header() {
+function Header({ setTurnSlide }) {
     return (
         <div className="header_container">
             <div className="grid wide">
@@ -75,7 +75,12 @@ function Header() {
                                         <i className="fa-solid fa-magnifying-glass"></i>
                                     </div>
                                     <div className="icon_bar_container">
-                                        <i className="fa-solid fa-bars"></i>
+                                        <i
+                                            onClick={() => {
+                                                setTurnSlide(true);
+                                            }}
+                                            className="fa-solid fa-bars"
+                                        ></i>
                                     </div>
                                 </div>
                             </div>

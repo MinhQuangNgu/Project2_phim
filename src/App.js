@@ -8,12 +8,16 @@ import "swiper/css/pagination";
 import { publicRouter } from "./routes/Routes";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
+import HeaderSlice from "./components/header/HeaderSlice";
+import HeaderSliceD from "./components/header/HeaderSliceD";
+import { useState } from "react";
 
 function App() {
+    const [turnSlide, setTurnSlide] = useState(false);
     return (
         <Router>
             <div className="App">
-                <Header />
+                <Header setTurnSlide={setTurnSlide} />
                 <Routes>
                     {publicRouter.map((item) => {
                         const Page = item.element;
@@ -25,6 +29,18 @@ function App() {
                     })}
                 </Routes>
                 <Footer />
+                <div className="row">
+                    <div className="col c-12 m-0 l-0">
+                        <HeaderSlice
+                            turnSlide={turnSlide}
+                            setTurnSlide={setTurnSlide}
+                        />
+                        <HeaderSliceD
+                            turnSlide={turnSlide}
+                            setTurnSlide={setTurnSlide}
+                        />
+                    </div>
+                </div>
             </div>
             <ToastContainer />
         </Router>
