@@ -79,3 +79,18 @@
     min-height: 5rem;
     background-color: white;
 }
+.movie_iframe{
+    height: 550px;
+}
+
+@media  only screen and (max-width:739px) {
+    .movie_iframe{
+        height: 200px;
+    }
+}
+
+@media  only screen and (min-width:740px)  and (max-width:1023px){
+    .movie_iframe{
+        height: 400px;
+    }
+}
