@@ -12,7 +12,18 @@ const url = "https://webmovieme.netlify.app/";
 
 app.use(express.json());
 
-app.use(cors({ credentials: true, origin: url }));
+app.use(cors({ credentials: true, origin: [url, "http://localhost:3000"] }));
+
+const http = require("http").createServer(app);
+const io = require("socket.io")(http, {
+    cors: {
+        origin: "*",
+    },
+});
+
+io.on("connection", (socket) => {
+    console.log(socket);
+});
 
 mongoose
     .connect(process.env.DATABASE_URL, { useNewUrlParser: true })

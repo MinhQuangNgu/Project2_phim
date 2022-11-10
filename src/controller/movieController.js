@@ -73,7 +73,7 @@ class movieController {
         }
     }
 
-    async getOneMoive(req, res) {
+    async getOneMovie(req, res) {
         try {
             const { slug } = req.params;
             const movie = await Movie.findOne({ slug })
