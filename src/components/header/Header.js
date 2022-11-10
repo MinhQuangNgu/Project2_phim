@@ -1,8 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./style.css";
 function Header({ setTurnSlide }) {
+    const searchingRef = useRef();
+    const searchingPcRef = useRef();
+    const [searching, setSearching] = useState(true);
+
+    const navigate = useNavigate();
     return (
         <div className="header_container">
             <div className="grid wide">
@@ -46,6 +51,16 @@ function Header({ setTurnSlide }) {
                                 <div className="header_search-container">
                                     <div className="header_search-wrap">
                                         <input
+                                            onKeyDown={(e) => {
+                                                if (e.code === "Enter") {
+                                                    navigate(
+                                                        `/tim-kiem?searching=${searchingPcRef.current.value}`
+                                                    );
+                                                    searchingPcRef.current.value =
+                                                        "";
+                                                }
+                                            }}
+                                            ref={searchingPcRef}
                                             placeholder="Tìm Phim"
                                             type="text"
                                         />
@@ -72,7 +87,15 @@ function Header({ setTurnSlide }) {
                             <div className="col c-6">
                                 <div className="icon_container">
                                     <div className="icon_searching_container">
-                                        <i className="fa-solid fa-magnifying-glass"></i>
+                                        <i
+                                            onClick={() => {
+                                                setTurnSlide(false);
+                                                setSearching(!searching);
+                                                searchingRef.current.value = "";
+                                            }}
+                                            style={{ cursor: "pointer" }}
+                                            className="fa-solid fa-magnifying-glass"
+                                        ></i>
                                     </div>
                                     <div className="icon_bar_container">
                                         <i
@@ -81,6 +104,29 @@ function Header({ setTurnSlide }) {
                                             }}
                                             className="fa-solid fa-bars"
                                         ></i>
+                                    </div>
+                                    <div
+                                        className={
+                                            searching
+                                                ? "searching_mobile_input_container"
+                                                : "searching_mobile_input_container searching_mobie_input-appear"
+                                        }
+                                    >
+                                        <input
+                                            ref={searchingRef}
+                                            onKeyDown={(e) => {
+                                                if (e.code === "Enter") {
+                                                    navigate(
+                                                        `/tim-kiem?searching=${searchingRef.current.value}`
+                                                    );
+                                                    searchingRef.current.value =
+                                                        "";
+                                                }
+                                            }}
+                                            name="searching"
+                                            placeholder="Tìm phim"
+                                            type="text"
+                                        />
                                     </div>
                                 </div>
                             </div>

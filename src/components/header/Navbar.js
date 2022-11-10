@@ -7,7 +7,7 @@ function Navbar({ name }) {
             <li>{name}</li>
             <div className="header_navbar-link-item-container">
                 <ul className="header_navbar-link-item-wrap">
-                    <Link className="header_navbar-link-item" to="/">
+                    <Link className="header_navbar-link-item" to="/asdds">
                         <li>Phim hành động</li>
                     </Link>
                     <Link className="header_navbar-link-item" to="/">

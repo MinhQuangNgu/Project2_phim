@@ -1,3 +1,4 @@
+import Login from "~/admin/Login";
 import Home from "~/components/home/Home";
 import MovieDetail from "~/movieDetail/MovieDetail";
 import Search from "~/search/Search";
@@ -20,6 +21,10 @@ export const publicRouter = [
     {
         element: Search,
         path: "/tim-kiem",
+    },
+    {
+        element: Login,
+        path: "/admin/login",
     },
 ];
 

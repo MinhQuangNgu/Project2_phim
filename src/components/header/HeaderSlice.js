@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SlideSideMobile from "./SlideSideMobile";
 import "./style.css";
@@ -7,6 +7,14 @@ const HeaderSlice = ({ turnSlide, setTurnSlide }) => {
     const [typeCheck, setTypeCheck] = useState(false);
     const [countryCheck, setCountryCheck] = useState(false);
     const [yearCheck, setYearCheck] = useState(false);
+
+    useEffect(() => {
+        if (turnSlide == false) {
+            setTypeCheck(false);
+            setYearCheck(false);
+            setCountryCheck(false);
+        }
+    }, [turnSlide]);
     return (
         <div
             className={
@@ -61,7 +69,7 @@ const HeaderSlice = ({ turnSlide, setTurnSlide }) => {
                                     marginTop: "0.6rem",
                                     fontSize: "2rem",
                                 }}
-                                class="fa-solid fa-angle-up"
+                                className="fa-solid fa-angle-up"
                             ></i>
                         ) : (
                             <i
@@ -70,7 +78,7 @@ const HeaderSlice = ({ turnSlide, setTurnSlide }) => {
                                     marginTop: "0.6rem",
                                     fontSize: "2rem",
                                 }}
-                                class="fa-solid fa-angle-down"
+                                className="fa-solid fa-angle-down"
                             ></i>
                         )}
                     </li>
@@ -96,7 +104,7 @@ const HeaderSlice = ({ turnSlide, setTurnSlide }) => {
                                     marginTop: "0.6rem",
                                     fontSize: "2rem",
                                 }}
-                                class="fa-solid fa-angle-up"
+                                className="fa-solid fa-angle-up"
                             ></i>
                         ) : (
                             <i
@@ -105,7 +113,7 @@ const HeaderSlice = ({ turnSlide, setTurnSlide }) => {
                                     marginTop: "0.6rem",
                                     fontSize: "2rem",
                                 }}
-                                class="fa-solid fa-angle-down"
+                                className="fa-solid fa-angle-down"
                             ></i>
                         )}
                     </li>
@@ -131,7 +139,7 @@ const HeaderSlice = ({ turnSlide, setTurnSlide }) => {
                                     marginTop: "0.6rem",
                                     fontSize: "2rem",
                                 }}
-                                class="fa-solid fa-angle-up"
+                                className="fa-solid fa-angle-up"
                             ></i>
                         ) : (
                             <i
@@ -140,7 +148,7 @@ const HeaderSlice = ({ turnSlide, setTurnSlide }) => {
                                     marginTop: "0.6rem",
                                     fontSize: "2rem",
                                 }}
-                                class="fa-solid fa-angle-down"
+                                className="fa-solid fa-angle-down"
                             ></i>
                         )}
                     </li>
