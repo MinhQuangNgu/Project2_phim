@@ -16,3 +16,14 @@
         padding:0 2rem;
     }
 }
+.app-mobile{
+    display: none;
+}
+@media only screen and (max-width:739px){
+    .app-pc{
+        display: none;
+    }
+    .app-mobile{
+        display: block;
+    }
+}

@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 
 function Navbar({ name }) {
     return (
-        <Link className="header_navbar-link-wrap" to="/">
-            <li>{name}</li>
+        <div className="header_navbar-link-wrap">
+            <Link className="header_navbar-link-wrap" to="/">
+                <li>{name}</li>
+            </Link>
             <div className="header_navbar-link-item-container">
                 <ul className="header_navbar-link-item-wrap">
                     <Link className="header_navbar-link-item" to="/asdds">
@@ -21,7 +23,7 @@ function Navbar({ name }) {
                     </Link>
                 </ul>
             </div>
-        </Link>
+        </div>
     );
 }
 

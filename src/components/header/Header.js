@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./style.css";

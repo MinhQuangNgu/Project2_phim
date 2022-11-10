@@ -1,4 +1,5 @@
 import Login from "~/admin/Login";
+import MovieCreate from "~/admin/MovieCreate";
 import Home from "~/components/home/Home";
 import MovieDetail from "~/movieDetail/MovieDetail";
 import Search from "~/search/Search";
@@ -28,4 +29,9 @@ export const publicRouter = [
     },
 ];
 
-export const privateRouter = [];
+export const privateRouter = [
+    {
+        element: MovieCreate,
+        path: "/admin/create",
+    },
+];

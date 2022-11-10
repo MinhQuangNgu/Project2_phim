@@ -32,6 +32,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    z-index: 30;
 }
 .header_navbar-link-wrap > li{
     text-transform: uppercase;
