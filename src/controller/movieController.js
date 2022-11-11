@@ -1,4 +1,6 @@
 const Movie = require("../model/Movie");
+const Kind = require("../model/Kind");
+const Country = require("../model/Country");
 
 class apiRequest {
     constructor(query, queryString) {
@@ -35,7 +37,7 @@ class apiRequest {
 
     filter() {
         const obj = { ...this.queryString };
-        const excludes = ["page", "sort", "limit", "search"];
+        const excludes = ["page", "sort", "limit", "search", "kind", "country"];
 
         excludes.forEach((el) => delete obj[el]);
         var objStr = JSON.stringify(obj);
@@ -52,22 +54,108 @@ class apiRequest {
 class movieController {
     async getMovie(req, res) {
         try {
-            const api = new apiRequest(
-                Movie.find()
-                    .populate({
-                        path: "kinds",
-                        select: "title slug",
-                    })
-                    .populate("chapters"),
-                req.query
-            )
-                .filter()
-                .paginating()
-                .searching()
-                .sorting();
-            const movies = await api.query;
-            const count = await Movie.count(api.query.limit(null).skip(null));
-            res.status(200).json({ movies, count });
+            if (!req.query.kind && !req.query.country) {
+                const api = new apiRequest(
+                    Movie.find()
+                        .populate({
+                            path: "kinds",
+                            select: "title slug",
+                        })
+                        .populate("chapters")
+                        .populate({
+                            path: "country",
+                            select: "name slug",
+                        }),
+                    req.query
+                )
+                    .filter()
+                    .paginating()
+                    .searching()
+                    .sorting();
+                const movies = await api.query;
+                const count = await Movie.count(
+                    api.query.limit(null).skip(null)
+                );
+                res.status(200).json({ movies, count });
+            } else if (req.query.kind && !req.query.country) {
+                const slug = req.query.kind;
+                const kind = await Kind.findOne({ slug });
+
+                const api = new apiRequest(
+                    Movie.find({ kinds: kind._id })
+                        .populate({
+                            path: "kinds",
+                            select: "title slug",
+                        })
+                        .populate("chapters")
+                        .populate({
+                            path: "country",
+                            select: "name slug",
+                        }),
+                    req.query
+                )
+                    .filter()
+                    .paginating()
+                    .searching()
+                    .sorting();
+                const movies = await api.query;
+                const count = await Movie.count(
+                    api.query.limit(null).skip(null)
+                );
+                res.status(200).json({ movies, count });
+            } else if (!req.query.kind && req.query.country) {
+                const slug = req.query.country;
+                const country = await Country.findOne({ slug });
+                const api = new apiRequest(
+                    Movie.find({ country })
+                        .populate({
+                            path: "kinds",
+                            select: "title slug",
+                        })
+                        .populate("chapters")
+                        .populate({
+                            path: "country",
+                            select: "name slug",
+                        }),
+                    req.query
+                )
+                    .filter()
+                    .paginating()
+                    .searching()
+                    .sorting();
+                const movies = await api.query;
+                const count = await Movie.count(
+                    api.query.limit(null).skip(null)
+                );
+                res.status(200).json({ movies, count });
+            } else {
+                const slug = req.query.kind;
+                const kind = await Kind.findOne({ slug });
+                const cSlug = req.query.country;
+                const country = await Country.findOne({ slug: cSlug });
+                const api = new apiRequest(
+                    Movie.find({ kinds: kind._id, country })
+                        .populate({
+                            path: "kinds",
+                            select: "title slug",
+                        })
+                        .populate("chapters")
+                        .populate({
+                            path: "country",
+                            select: "name slug",
+                        }),
+                    req.query
+                )
+                    .filter()
+                    .paginating()
+                    .searching()
+                    .sorting();
+                const movies = await api.query;
+                const count = await Movie.count(
+                    api.query.limit(null).skip(null)
+                );
+                res.status(200).json({ movies, count });
+            }
         } catch (ex) {
             return res.status(500).json({ msg: ex.message });
         }
@@ -80,9 +168,18 @@ class movieController {
                 .populate({
                     path: "kinds",
                     select: "title slug",
+                    match: {
+                        slug: req.query.kind,
+                    },
                 })
                 .populate("chapters")
-                .populate("country");
+                .populate({
+                    path: "country",
+                    select: "name slug",
+                    match: {
+                        slug: req.query.country,
+                    },
+                });
             res.status(200).json({ movie });
         } catch (err) {
             return res.status(500).json({
