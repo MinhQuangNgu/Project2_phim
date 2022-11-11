@@ -2,11 +2,7 @@ const router = require("express").Router();
 const movieController = require("../controller/movieController");
 const middleWareController = require("../controller/middleWareController");
 router.get("/getone/:slug", movieController.getOneMovie);
-router.post(
-    "/create",
-    middleWareController.verifyAdmin,
-    movieController.createMovie
-);
+router.post("/create", movieController.createMovie);
 router.put(
     "/update/:id",
     middleWareController.verifyAdmin,

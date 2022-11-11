@@ -48,12 +48,10 @@ const movieSchema = new schema(
             type: String,
         },
         country: {
-            type: {
-                type: mongoose.Types.ObjectId,
-                ref: "Countries",
-            },
+            type: mongoose.Types.ObjectId,
+            ref: "Countries",
         },
-        language: {
+        languageF: {
             type: String,
         },
         moviesLink: {
@@ -75,6 +73,10 @@ const movieSchema = new schema(
                 },
             ],
             default: [],
+        },
+        watching: {
+            type: Number,
+            default: 0,
         },
     },
     {

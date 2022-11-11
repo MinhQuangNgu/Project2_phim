@@ -103,7 +103,7 @@ class movieController {
                 kinds,
                 description,
                 country,
-                language,
+                languageF,
                 moviesLink,
                 isSeries,
             } = req.body;
@@ -118,13 +118,13 @@ class movieController {
                 kinds,
                 description,
                 country,
-                language,
+                languageF,
                 moviesLink,
                 isSeries,
             });
 
             await movie.save();
-            res.status(200).json({ msg: "Tạo thành công phim." });
+            res.status(200).json({ msg: "Tạo thành công phim.", movie });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
@@ -157,7 +157,7 @@ class movieController {
                 kinds,
                 description,
                 country,
-                language,
+                languageF,
                 moviesLink,
                 isSeries,
             } = req.body;
@@ -176,7 +176,7 @@ class movieController {
                 kinds,
                 description,
                 country,
-                language,
+                languageF,
                 moviesLink,
                 isSeries,
             });
