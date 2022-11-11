@@ -8,10 +8,10 @@ function Home() {
         <div className="home_container">
             <div className="grid wide">
                 <Recommend />
-                <Categary name="Phim Top" />
-                <Categary name="Phim lẻ" />
-                <Categary name="Phim bộ" />
-                <Categary name="Anime" />
+                <Categary name="Phim Top" url="/movie?sort=watch&limit=8" />
+                <Categary name="Phim lẻ" url="/movie?sort=watch&limit=8" />
+                <Categary name="Phim bộ" url="/movie?sort=watch&limit=8" />
+                <Categary name="Anime" url="/movie?sort=watch&limit=8" />
             </div>
         </div>
     );

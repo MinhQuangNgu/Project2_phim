@@ -1,13 +1,50 @@
-import React, { useRef, useState } from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Navbar from "./Navbar";
 import "./style.css";
 function Header({ setTurnSlide }) {
     const searchingRef = useRef();
     const searchingPcRef = useRef();
     const [searching, setSearching] = useState(true);
-
+    const [kinds, setKinds] = useState([]);
+    const [countries, setCountries] = useState([]);
+    useEffect(() => {
+        let here = true;
+        if (here) {
+            const url = "/kind";
+            axios
+                .get(url)
+                .then((res) => {
+                    setKinds(res.data.kinds);
+                })
+                .catch((err) => {
+                    toast.error(err?.response?.data?.msg);
+                });
+        }
+        return () => {
+            here = false;
+        };
+    }, []);
+    useEffect(() => {
+        let here = true;
+        if (here) {
+            const url = "/country";
+            axios
+                .get(url)
+                .then((res) => {
+                    setCountries(res.data.countries);
+                })
+                .catch((err) => {
+                    toast.error(err?.response?.data?.msg);
+                });
+        }
+        return () => {
+            here = false;
+        };
+    }, []);
     const navigate = useNavigate();
     return (
         <div className="header_container">
@@ -43,9 +80,24 @@ function Header({ setTurnSlide }) {
                                     >
                                         <li>Phim Hot</li>
                                     </Link>
-                                    <Navbar name="Thể Loại" />
-                                    <Navbar name="Quốc gia" />
-                                    <Navbar name="Năm Phát Hành" />
+                                    <Link
+                                        className="header_navbar-link-wrap"
+                                        to="/"
+                                    >
+                                        <li>Phim Anime</li>
+                                    </Link>
+                                    <Navbar
+                                        sea="the-loai"
+                                        item={kinds}
+                                        isType={true}
+                                        name="Thể Loại"
+                                    />
+                                    <Navbar
+                                        sea="quoc-gia"
+                                        item={countries}
+                                        isType={false}
+                                        name="Quốc gia"
+                                    />
                                 </ul>
                             </div>
                             <div className="col c-0 m-3 l-3">

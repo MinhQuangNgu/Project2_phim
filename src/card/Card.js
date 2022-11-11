@@ -2,20 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
 
-const Card = () => {
+const Card = ({ item }) => {
     return (
         <div className="card_container">
-            <Link className="card_image-container" to={`/phim/asdd`}>
-                <img
-                    className="card_image"
-                    src="https://cdn.popsww.com/blog/sites/2/2021/06/top-phim-hay-2020.jpg"
-                />
+            <Link className="card_image-container" to={`/phim/${item?.slug}`}>
+                <img className="card_image" src={item?.image} />
                 <div className="card_title-container">
-                    <p>Chiếc điện thoại đen</p>
+                    <p>{item?.title}</p>
                 </div>
             </Link>
             <div className="card_detail-container">
-                <p style={{ margin: 0 }}>HD | Vietsub</p>
+                <p style={{ margin: 0 }}>{item?.status}</p>
             </div>
         </div>
     );

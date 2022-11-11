@@ -1,9 +1,29 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import Card from "~/card/Card";
 import "./style.css";
 
-function Categary({ name }) {
+function Categary({ name, url }) {
+    const [infor, setInfor] = useState([]);
+    useEffect(() => {
+        let here = true;
+        if (here) {
+            axios
+                .get(url)
+                .then((res) => {
+                    setInfor(res.data?.movies);
+                })
+                .catch((err) => {
+                    toast.error(err?.response?.data?.msg);
+                });
+        }
+
+        return () => {
+            here = false;
+        };
+    }, []);
     return (
         <div className="categary_container">
             <div className="categary_title">
@@ -18,30 +38,11 @@ function Categary({ name }) {
             </div>
             <div className="categary_card-container">
                 <div className="row">
-                    <div className="col c-6 m-4 l-3">
-                        <Card />
-                    </div>
-                    <div className="col c-6 m-4 l-3">
-                        <Card />
-                    </div>
-                    <div className="col c-6 m-4 l-3">
-                        <Card />
-                    </div>
-                    <div className="col c-6 m-4 l-3">
-                        <Card />
-                    </div>
-                    <div className="col c-6 m-4 l-3">
-                        <Card />
-                    </div>
-                    <div className="col c-6 m-4 l-3">
-                        <Card />
-                    </div>
-                    <div className="col c-6 m-4 l-3">
-                        <Card />
-                    </div>
-                    <div className="col c-6 m-4 l-3">
-                        <Card />
-                    </div>
+                    {infor?.map((item) => (
+                        <div key={item?._id} className="col c-6 m-4 l-3">
+                            <Card item={item} />
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

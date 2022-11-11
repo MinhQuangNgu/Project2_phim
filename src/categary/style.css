@@ -16,10 +16,6 @@
     text-transform: uppercase;
     font-size: 1.2rem;
 }
-.categary_card-container{
-    display: flex;
-    flex-wrap: wrap;
-}
 .categary_watchAll-wrap{
     width: 13rem;
     height: 3rem;
