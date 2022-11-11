@@ -170,3 +170,16 @@
     width: 100%;
     min-height: 20rem;
 }
+.trailer_container_detail{
+    height: 500px;
+}
+@media only screen and (max-width:739px){
+    .trailer_container_detail{
+        height: 200px;
+    }
+}
+@media only screen and (max-width:740px) and (min-width:1023px){
+    .trailer_container_detail{
+        height: 400px;
+    }
+}
