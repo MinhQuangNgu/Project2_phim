@@ -154,3 +154,118 @@
 .kind_create_button > button:hover{
     transform: scale(1.1);
 }
+.manager_container{
+    margin-top: 5rem;
+    width: 100%;
+}
+.manager_title{
+    text-align: center;
+    font-size: 2.8rem;
+    color:white;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+}
+.manager_searching{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 5rem;
+}
+.manager_searching > input{
+    width: 60%;
+    height: 6rem;
+    outline: none;
+    border-radius: 10rem;
+    padding:0 2rem;
+    font-size: 2rem;
+}
+.manager_card_container{
+    width: 100%;
+    height: 30rem;
+    background-color: white;
+    border-radius: 3rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+}
+.manager_card_image_container{
+    width: 100%;
+    height: 65%;
+    margin-bottom: 5%;
+}
+.manager_card_image_container > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.manager_card_title_container{
+    width: 100%;
+    height: 20%;
+    overflow: hidden;
+    text-align: center;
+    font-size: 1rem;
+}
+.manager_card_button_container{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+}
+.manager_card_button_container > button{
+    width: 30%;
+    height: 100%;
+    border-radius: 10rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all ease 0.1s;
+}
+.manager_update_button{
+    background-color: green;
+    color:white;
+    margin-right: 1rem;
+}
+.manager_delete_button{
+    background-color: red;
+    color:white;
+}
+.manager_card_button_container > button:hover{
+    transform: scale(1.1);
+}
+.manager_create_container{
+    display: flex;
+    justify-content: center;
+    margin:4rem 0;   
+}
+.manager_create_container > button{
+    width: 30%;
+    height: 5rem;
+    border-radius: 10rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color:white;
+    background-color: #F88600;
+    transition: all ease 0.2s;
+}
+.manager_create_container > button:hover{
+    transform: scale(1.1);
+}
+.movie_create_container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.movie_create_wrap{
+    margin:5rem 0;
+    background-color: white;
+    width: 70%;
+    min-height: 10rem;
+    border-radius: 5rem;
+    padding:2rem;
+}
+.movie_create_title{
+    text-align: center;
+    font-size: 1.7rem;
+    text-transform: uppercase;
+    color:#F88600;
+}

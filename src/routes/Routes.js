@@ -1,4 +1,5 @@
 import Login from "~/admin/Login";
+import Manager from "~/admin/Manager";
 import MovieCreate from "~/admin/MovieCreate";
 import Home from "~/components/home/Home";
 import MovieDetail from "~/movieDetail/MovieDetail";
@@ -31,7 +32,11 @@ export const publicRouter = [
 
 export const privateRouter = [
     {
+        element: Manager,
+        path: "/admin/manager",
+    },
+    {
         element: MovieCreate,
-        path: "/admin/create",
+        path: "/admin/movie/create",
     },
 ];

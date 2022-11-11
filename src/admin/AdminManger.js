@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { isFailing, isLoading, isLogout, isSuccess } from "~/redux/slice/auth";
 import "./style.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AdminManger = () => {
     const dispatch = useDispatch();
@@ -11,6 +12,7 @@ const AdminManger = () => {
     const kindRef = useRef(null);
     const countryRef = useRef(null);
     const auth = useSelector((state) => state.auth);
+    const navigate = useNavigate();
 
     const [isKind, setIsKind] = useState(false);
     const [isCountry, setIsCountry] = useState(false);
@@ -158,8 +160,14 @@ const AdminManger = () => {
     return (
         <div className="grid wide">
             <div className="admin_manager_container">
-                <div className="admin_manager_button" title="Tạo phim">
-                    Tạo phim
+                <div
+                    onClick={() => {
+                        navigate("/admin/manager");
+                    }}
+                    className="admin_manager_button"
+                    title="Tạo phim"
+                >
+                    Quản lí phim
                 </div>
                 <div
                     onClick={() => {
