@@ -64,27 +64,27 @@ function Header({ setTurnSlide }) {
                                 <ul className="header_navbar-container">
                                     <Link
                                         className="header_navbar-link-wrap"
-                                        to="/"
+                                        to="/tim-kiem?isSeries=false"
                                     >
-                                        <li>Phim Mới</li>
+                                        <li>Phim Lẻ</li>
                                     </Link>
                                     <Link
                                         className="header_navbar-link-wrap"
-                                        to="/"
+                                        to="/tim-kiem?isSeries=true"
                                     >
                                         <li>Phim Bộ</li>
                                     </Link>
                                     <Link
                                         className="header_navbar-link-wrap"
-                                        to="/"
+                                        to="/tim-kiem"
                                     >
-                                        <li>Phim Hot</li>
+                                        <li>Phim Mới Nhất</li>
                                     </Link>
                                     <Link
                                         className="header_navbar-link-wrap"
-                                        to="/"
+                                        to="/tim-kiem?sort=watching"
                                     >
-                                        <li>Phim Anime</li>
+                                        <li>Phim Top</li>
                                     </Link>
                                     <Navbar
                                         sea="the-loai"
