@@ -254,12 +254,12 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 .movie_create_wrap{
     margin:5rem 0;
     background-color: white;
     width: 70%;
-    min-height: 10rem;
     border-radius: 5rem;
     padding:2rem;
 }
@@ -268,4 +268,131 @@
     font-size: 1.7rem;
     text-transform: uppercase;
     color:#F88600;
+}
+.movie_create_main{
+    width: 100%;
+    margin-top: 2rem;
+    background-color: white;
+    min-height: 10rem;
+    padding:2rem;
+    border-radius: 5rem;
+}
+.movie_drop_zone{
+    float:left;
+    width: 30rem;
+    height: 30rem;
+    border:1px solid black;
+}
+.movie_drop_zone_wrap{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+}
+.image_create-container{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
+.image_create-container > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.movie_create_form-items{
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+.movie_create_form-items > label{
+    font-size: 1.7rem;
+    font-weight: 500;
+    margin-right: 1rem;
+}
+.movie_create_form-items > input{
+    width: 60%;
+    height: 5rem;
+    border-radius: 5rem;
+    padding:0 1rem;
+    font-size: 1.7rem;
+    outline: none;
+}
+.movie_create_form-items > textarea{
+    width: 60%;
+    min-height: 10rem;
+    border-radius: 2rem;
+    padding:1.5rem;
+    font-size: 1.7rem;
+    outline: none;
+    resize: vertical;
+}
+.movie_create_form-items-checkbox{
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.7rem;
+    margin-bottom: 3rem;
+}
+.movie_create_form-items-checkbox > label{
+    font-size: 1.7rem;
+    font-weight: 500;
+    margin-right: 1rem;
+}
+.movie_create_form-items-checkbox > input{
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+}
+.movie_create-form-items-kinds{
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+.movie_create-form-items-kinds > input{
+    margin-left: 1rem;
+    width: 2rem;
+    height: 2rem;
+}
+.movie_create_form-items-select{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4rem;
+}
+.movie_create_form-items-select > select{
+    width: 30%;
+    height: 5rem;
+    font-size: 1.7rem;
+    outline: none;
+    border-radius: 5rem;
+    text-align: center;
+}
+.movie_create-button{
+    width: auto;
+    display: flex;
+    justify-content: center;
+}
+.movie_create-button > button{
+    width: 20rem;
+    height: 5rem;
+    font-size: 2rem;
+    border-radius: 5rem;
+    background-color: green;
+    color:white;
+    cursor: pointer;
+    outline: none;
+    transition: all ease 0.3s;
+}
+.movie_create-button > button:hover{
+    transform: scale(1.1);
 }
