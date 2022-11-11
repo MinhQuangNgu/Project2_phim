@@ -106,7 +106,7 @@ class movieController {
                 country,
                 languageF,
                 moviesLink,
-                isSeries,
+                type,
             } = req.body;
             const movie = new Movie({
                 title,
@@ -121,7 +121,7 @@ class movieController {
                 country,
                 languageF,
                 moviesLink,
-                isSeries,
+                type,
             });
 
             await movie.save();
@@ -160,7 +160,7 @@ class movieController {
                 country,
                 languageF,
                 moviesLink,
-                isSeries,
+                type,
             } = req.body;
             const movie = await Movie.findById(id);
             if (!movie) {
@@ -179,7 +179,7 @@ class movieController {
                 country,
                 languageF,
                 moviesLink,
-                isSeries,
+                type,
             });
             return res.status(200).json({ msg: "Cập nhật thành công." });
         } catch (err) {

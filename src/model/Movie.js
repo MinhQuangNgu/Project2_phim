@@ -61,9 +61,8 @@ const movieSchema = new schema(
             type: String,
             slug: "title",
         },
-        isSeries: {
-            type: Boolean,
-            default: false,
+        type: {
+            type: String,
         },
         chapters: {
             type: [
