@@ -5,10 +5,11 @@ const KindBox = ({ item, totalKind, pKinds, setPKinds }) => {
 
     useEffect(() => {
         const checked = totalKind?.some(
-            (infor) => infor.toString() === item?._id.toString()
+            (infor) => infor?._id.toString() === item?._id.toString()
         );
         if (checked) {
             checkRef.current.checked = true;
+            setPKinds([...pKinds, item?._id]);
         }
     }, []);
 

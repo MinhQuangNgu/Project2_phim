@@ -2,15 +2,18 @@ import axios from "axios";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { isFailing, isLoading, isSuccess } from "~/redux/slice/auth";
 import KindBox from "./KindBox";
 import "./style.css";
-const MovieCreate = () => {
+const MovieUpdate = () => {
+    const { id } = useParams();
     const [image, setImage] = useState("");
     const [kinds, setKinds] = useState([]);
     const [countries, setCountries] = useState([]);
     const [pKinds, setPKinds] = useState([]);
+    const [movieDetail, setMovieDetail] = useState({});
 
     const dispatch = useDispatch();
     const auth = useSelector((state) => state.auth);
@@ -60,7 +63,6 @@ const MovieCreate = () => {
             !movie.title ||
             !movie.engTitle ||
             !movie.status ||
-            !movie.image ||
             !movie.trailer ||
             !movie.times ||
             !movie.year ||
@@ -72,22 +74,26 @@ const MovieCreate = () => {
         ) {
             return toast.error("Vui lòng điền hết thông tin.");
         }
-        const formData = new FormData();
-        formData.append("file", imageRef.current);
-        formData.append("upload_preset", "sttruyenxyz");
-        dispatch(isLoading());
-        try {
-            const res = await axios.post(
-                "https://api.cloudinary.com/v1_1/sttruyen/image/upload",
-                formData
-            );
-            movie.image = res.data.url;
-        } catch (err) {
-            return dispatch(isFailing());
+        if (image) {
+            const formData = new FormData();
+            formData.append("file", imageRef.current);
+            formData.append("upload_preset", "sttruyenxyz");
+            dispatch(isLoading());
+            try {
+                const res = await axios.post(
+                    "https://api.cloudinary.com/v1_1/sttruyen/image/upload",
+                    formData
+                );
+                movie.image = res.data.url;
+            } catch (err) {
+                return dispatch(isFailing());
+            }
+        } else {
+            movie.image = movieDetail?.image;
         }
         try {
-            const res = await axios.post(
-                "/movie/create",
+            const res = await axios.put(
+                `/movie/update/${movieDetail?._id}`,
                 { ...movie },
                 {
                     headers: {
@@ -101,19 +107,6 @@ const MovieCreate = () => {
             toast.error(err?.response?.data?.msg);
             dispatch(isFailing());
         }
-        titleRef.current.value = "";
-        engTitleRef.current.value = "";
-        statusRef.current.value = "";
-        imageRef.current = "";
-        trailerRef.current.value = "";
-        timeRef.current.value = "";
-        yearRef.current.value = "";
-        setPKinds([]);
-        contentRef.current.value = "";
-        countryRef.current.value = "";
-        languageRef.current.value = "";
-        movieRef.current.value = "";
-        isSerialRef.current.checked = false;
     };
 
     useEffect(() => {
@@ -133,6 +126,25 @@ const MovieCreate = () => {
             here = false;
         };
     }, []);
+
+    useEffect(() => {
+        let here = true;
+        if (here) {
+            const url = `/movie/getone/${id}`;
+            axios
+                .get(url)
+                .then((res) => {
+                    setMovieDetail(res.data?.movie);
+                })
+                .catch((err) => {
+                    toast.error(err?.response?.data?.msg);
+                });
+        }
+        return () => {
+            here = false;
+        };
+    }, []);
+
     useEffect(() => {
         let here = true;
         if (here) {
@@ -156,7 +168,7 @@ const MovieCreate = () => {
             <div className="movie_create_container">
                 <div className="movie_create_wrap">
                     <div className="movie_create_title">
-                        <h1>Tạo phim mới</h1>
+                        <h1>Cập Nhật Phim</h1>
                     </div>
                 </div>
                 <div className="movie_create_main">
@@ -170,7 +182,10 @@ const MovieCreate = () => {
                                 <i className="fa-solid fa-image"></i>
                             </div>
                             <div className="image_create-container">
-                                <img className="image_items" src={image} />
+                                <img
+                                    className="image_items"
+                                    src={image || movieDetail?.image}
+                                />
                             </div>
                         </div>
                         <div className=""></div>
@@ -179,6 +194,7 @@ const MovieCreate = () => {
                         <div className="movie_create_form-items">
                             <label>Tên phim (tiếng Việt):</label>
                             <input
+                                defaultValue={movieDetail?.title}
                                 name="title"
                                 ref={titleRef}
                                 type="text"
@@ -188,6 +204,7 @@ const MovieCreate = () => {
                         <div className="movie_create_form-items">
                             <label>Tên phim (tiếng Anh):</label>
                             <input
+                                defaultValue={movieDetail?.engTitle}
                                 name="engTitle"
                                 ref={engTitleRef}
                                 type="text"
@@ -197,6 +214,7 @@ const MovieCreate = () => {
                         <div className="movie_create_form-items">
                             <label>Trạng thái:</label>
                             <input
+                                defaultValue={movieDetail?.status}
                                 name="status"
                                 ref={statusRef}
                                 type="text"
@@ -206,6 +224,7 @@ const MovieCreate = () => {
                         <div className="movie_create_form-items">
                             <label>Năm sản xuất:</label>
                             <input
+                                defaultValue={movieDetail?.year}
                                 name="year"
                                 ref={yearRef}
                                 type="text"
@@ -215,6 +234,7 @@ const MovieCreate = () => {
                         <div className="movie_create_form-items">
                             <label>Thời lượng:</label>
                             <input
+                                defaultValue={movieDetail?.times}
                                 name="times"
                                 ref={timeRef}
                                 type="text"
@@ -224,6 +244,7 @@ const MovieCreate = () => {
                         <div className="movie_create_form-items">
                             <label>Ngôn ngữ:</label>
                             <input
+                                defaultValue={movieDetail?.languageF}
                                 name="laguage"
                                 ref={languageRef}
                                 type="text"
@@ -233,6 +254,7 @@ const MovieCreate = () => {
                         <div className="movie_create_form-items">
                             <label>Nội dung:</label>
                             <textarea
+                                defaultValue={movieDetail?.description}
                                 name="content"
                                 ref={contentRef}
                                 type="text"
@@ -242,6 +264,7 @@ const MovieCreate = () => {
                         <div className="movie_create_form-items">
                             <label>Link trailer:</label>
                             <textarea
+                                defaultValue={movieDetail?.trailer}
                                 name="trailer"
                                 ref={trailerRef}
                                 type="text"
@@ -251,6 +274,7 @@ const MovieCreate = () => {
                         <div className="movie_create_form-items">
                             <label>Link phim:</label>
                             <textarea
+                                defaultValue={movieDetail?.moviesLink}
                                 name="movieLink"
                                 ref={movieRef}
                                 type="text"
@@ -262,7 +286,7 @@ const MovieCreate = () => {
                                 <KindBox
                                     setPKinds={setPKinds}
                                     pKinds={pKinds}
-                                    totalKind={[]}
+                                    totalKind={movieDetail?.kinds}
                                     item={item}
                                     key={item?._id}
                                 />
@@ -270,23 +294,46 @@ const MovieCreate = () => {
                         </div>
                         <div className="movie_create_form-items-select">
                             <select ref={countryRef}>
-                                {countries?.map((item) => (
-                                    <option value={item?._id} key={item?._id}>
-                                        {item?.name}
-                                    </option>
-                                ))}
+                                {countries?.map((item) => {
+                                    if (
+                                        item?._id.toString() ===
+                                        movieDetail?.country?._id.toString()
+                                    ) {
+                                        return (
+                                            <option
+                                                selected="selected"
+                                                value={item?._id}
+                                                key={item?._id}
+                                            >
+                                                {item?.name}
+                                            </option>
+                                        );
+                                    } else {
+                                        return (
+                                            <option
+                                                value={item?._id}
+                                                key={item?._id}
+                                            >
+                                                {item?.name}
+                                            </option>
+                                        );
+                                    }
+                                })}
                             </select>
                         </div>
                         <div className="movie_create_form-items-checkbox">
                             <label htmlFor="serial">Phim bộ:</label>
                             <input
+                                defaultChecked={movieDetail?.isSeries}
                                 ref={isSerialRef}
                                 id="serial"
                                 type="checkbox"
                             />
                         </div>
                         <div className="movie_create-button">
-                            <button onClick={handleCreateMovie}>Tạo mới</button>
+                            <button onClick={handleCreateMovie}>
+                                Cập Nhật
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -294,5 +341,4 @@ const MovieCreate = () => {
         </div>
     );
 };
-
-export default MovieCreate;
+export default MovieUpdate;

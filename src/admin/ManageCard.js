@@ -1,16 +1,25 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./style.css";
-const ManageCard = () => {
+const ManageCard = ({ item }) => {
+    const navigate = useNavigate();
     return (
         <div className="manager_card_container">
             <div className="manager_card_image_container">
-                <img src="https://cdn.popsww.com/blog/sites/2/2021/06/top-phim-hay-2020.jpg" />
+                <img src={item?.image} />
             </div>
             <div className="manager_card_title_container">
-                <h1>Chiếc điện thoại đen</h1>
+                <h1>{item?.title}</h1>
             </div>
             <div className="manager_card_button_container">
-                <button className="manager_update_button">Cập nhật</button>
+                <button
+                    onClick={() => {
+                        navigate(`/admin/movie/update/${item?.slug}`);
+                    }}
+                    className="manager_update_button"
+                >
+                    Cập nhật
+                </button>
                 <button className="manager_delete_button">Xóa</button>
             </div>
         </div>

@@ -2,11 +2,14 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import Comment from "~/comment/Comment";
 import NotFound from "~/notfound/NotFound";
 import "./style.css";
 
 const MovieDetail = () => {
     const { slug } = useParams();
+
+    const kindRef = useRef("");
 
     const trailerRef = useRef();
 
@@ -37,6 +40,16 @@ const MovieDetail = () => {
                         setCheck(true);
                     }
                     setMovie(res.data?.movie);
+                    if (!kindRef.current) {
+                        res.data.movie?.kinds?.forEach((item, index) => {
+                            if (index !== res.data.movie?.kinds.length - 1) {
+                                kindRef.current =
+                                    kindRef.current + item?.title + " - ";
+                            } else {
+                                kindRef.current = kindRef.current + item?.title;
+                            }
+                        });
+                    }
                 })
                 .catch((err) => {
                     setCheck(true);
@@ -124,18 +137,7 @@ const MovieDetail = () => {
                                         <li>
                                             Quốc gia: {movie?.country?.name}
                                         </li>
-                                        <li>
-                                            Thể loại:
-                                            <Link className="movie_type" to="">
-                                                {" "}
-                                                Phiêu lưu{" "}
-                                            </Link>
-                                            -
-                                            <Link className="movie_type" to="">
-                                                {" "}
-                                                Hành Động{" "}
-                                            </Link>
-                                        </li>
+                                        <li>Thể loại: {kindRef.current}</li>
                                     </ul>
                                     <div className="movie_content-container">
                                         <h3>Nội dung phim</h3>
@@ -154,7 +156,9 @@ const MovieDetail = () => {
                                     allowFullScreen
                                 ></iframe>
                             </div>
-                            <div className="movie_comment-container"></div>
+                            <div className="movie_comment-container">
+                                <Comment />
+                            </div>
                         </div>
                     </div>
                 </div>

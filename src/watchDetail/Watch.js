@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import Comment from "~/comment/Comment";
 import NotFound from "~/notfound/NotFound";
 import "./style.css";
 
@@ -75,7 +76,9 @@ const Watch = () => {
                                     )}
                                 </div>
                             </div>
-                            <div className="comment_container"></div>
+                            <div className="comment_container">
+                                <Comment />
+                            </div>
                         </div>
                     </div>
                 </div>

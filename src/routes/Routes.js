@@ -1,6 +1,7 @@
 import Login from "~/admin/Login";
 import Manager from "~/admin/Manager";
 import MovieCreate from "~/admin/MovieCreate";
+import MovieUpdate from "~/admin/MovieUpdate";
 import Home from "~/components/home/Home";
 import MovieDetail from "~/movieDetail/MovieDetail";
 import Search from "~/search/Search";
@@ -38,5 +39,9 @@ export const privateRouter = [
     {
         element: MovieCreate,
         path: "/admin/movie/create",
+    },
+    {
+        element: MovieUpdate,
+        path: "/admin/movie/update/:id",
     },
 ];

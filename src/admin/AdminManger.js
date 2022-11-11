@@ -157,6 +157,7 @@ const AdminManger = () => {
             here = false;
         };
     }, [updateTime]);
+
     return (
         <div className="grid wide">
             <div className="admin_manager_container">
