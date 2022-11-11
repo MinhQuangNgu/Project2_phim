@@ -11,7 +11,7 @@ const KindBox = ({ item, totalKind, pKinds, setPKinds }) => {
             checkRef.current.checked = true;
             setPKinds([...pKinds, item?._id]);
         }
-    }, []);
+    }, [checkRef, totalKind]);
 
     const handleChange = () => {
         if (checkRef.current?.checked) {

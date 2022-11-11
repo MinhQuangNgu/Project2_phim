@@ -28,7 +28,7 @@ const MovieUpdate = () => {
     const contentRef = useRef();
     const trailerRef = useRef();
     const movieRef = useRef();
-    const isSerialRef = useRef();
+    const typeRef = useRef();
     const countryRef = useRef();
 
     const onDrop = useCallback((acceptedFiles) => {
@@ -57,7 +57,7 @@ const MovieUpdate = () => {
             country: countryRef.current.value,
             languageF: languageRef.current.value,
             moviesLink: movieRef.current.value,
-            isSeries: isSerialRef.current.checked,
+            type: typeRef.current.value,
         };
         if (
             !movie.title ||
@@ -321,14 +321,30 @@ const MovieUpdate = () => {
                                 })}
                             </select>
                         </div>
-                        <div className="movie_create_form-items-checkbox">
-                            <label htmlFor="serial">Phim bộ:</label>
-                            <input
-                                defaultChecked={movieDetail?.isSeries}
-                                ref={isSerialRef}
-                                id="serial"
-                                type="checkbox"
-                            />
+                        <div className="movie_create_form-items-select">
+                            <select ref={typeRef}>
+                                {movieDetail?.type === "phim-le" ? (
+                                    <option selected="selected" value="phim-le">
+                                        Phim Lẻ
+                                    </option>
+                                ) : (
+                                    <option value="phim-le">Phim Lẻ</option>
+                                )}
+                                {movieDetail?.type === "phim-bo" ? (
+                                    <option selected="selected" value="phim-bo">
+                                        Phim Bộ
+                                    </option>
+                                ) : (
+                                    <option value="phim-bo">Phim Bộ</option>
+                                )}
+                                {movieDetail?.type === "anime" ? (
+                                    <option selected="selected" value="anime">
+                                        Anime
+                                    </option>
+                                ) : (
+                                    <option value="anime">Anime</option>
+                                )}
+                            </select>
                         </div>
                         <div className="movie_create-button">
                             <button onClick={handleCreateMovie}>

@@ -25,7 +25,7 @@ const MovieCreate = () => {
     const contentRef = useRef();
     const trailerRef = useRef();
     const movieRef = useRef();
-    const isSerialRef = useRef();
+    const typeRef = useRef();
     const countryRef = useRef();
 
     const onDrop = useCallback((acceptedFiles) => {
@@ -54,7 +54,7 @@ const MovieCreate = () => {
             country: countryRef.current.value,
             languageF: languageRef.current.value,
             moviesLink: movieRef.current.value,
-            isSeries: isSerialRef.current.checked,
+            type: typeRef.current.value,
         };
         if (
             !movie.title ||
@@ -113,7 +113,7 @@ const MovieCreate = () => {
         countryRef.current.value = "";
         languageRef.current.value = "";
         movieRef.current.value = "";
-        isSerialRef.current.checked = false;
+        typeRef.current.checked = false;
     };
 
     useEffect(() => {
@@ -277,13 +277,12 @@ const MovieCreate = () => {
                                 ))}
                             </select>
                         </div>
-                        <div className="movie_create_form-items-checkbox">
-                            <label htmlFor="serial">Phim bộ:</label>
-                            <input
-                                ref={isSerialRef}
-                                id="serial"
-                                type="checkbox"
-                            />
+                        <div className="movie_create_form-items-select">
+                            <select ref={typeRef}>
+                                <option value="phim-le">Phim Lẻ</option>
+                                <option value="phim-le">Phim Lẻ</option>
+                                <option value="anime">Anime</option>
+                            </select>
                         </div>
                         <div className="movie_create-button">
                             <button onClick={handleCreateMovie}>Tạo mới</button>
