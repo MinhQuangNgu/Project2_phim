@@ -56,22 +56,18 @@ const MovieDetail = () => {
                             <div className="movie_infor_container">
                                 <img
                                     className="movie_infor-image"
-                                    src="https://congluan-cdn.congluan.vn/files/content/2022/07/06/%E2%80%98minions-su-troi-day-cua-gru%E2%80%99-pha-vo-ky-luc-phong-ve-tai-viet-nam-020737208.jpg"
+                                    src={movie?.image}
                                 />
                                 <div className="movie_infor_detail_container">
                                     <div className="movie_infor_detail_image_container">
-                                        <img src="https://kenh14cdn.com/203336854389633024/2022/7/5/photo-1-1657007086287434920948.jpg" />
+                                        <img src={movie?.image} />
                                     </div>
                                     <div className="movie_infor_detail-clearly">
                                         <div className="movie_infor_detail_title">
-                                            <h1>
-                                                Cho Kẹo Hay Bị Ghẹo Scooby Doo
-                                            </h1>
+                                            <h1>{movie?.title}</h1>
                                         </div>
                                         <div className="movie_infor_detail_enTitle">
-                                            <h2>
-                                                Cho Kẹo Hay Bị Ghẹo Scooby Doo
-                                            </h2>
+                                            <h2>{movie?.engTitle}</h2>
                                         </div>
                                         <div className="movie_infor_detail_button_container">
                                             <button
@@ -80,7 +76,9 @@ const MovieDetail = () => {
                                             >
                                                 Trailer
                                             </button>
-                                            <Link to="/xem-phim/asds">
+                                            <Link
+                                                to={`/xem-phim/${movie?.slug}`}
+                                            >
                                                 <button className="movie_infor_detail_button_watch">
                                                     Xem Phim
                                                 </button>
@@ -118,12 +116,14 @@ const MovieDetail = () => {
                                 </div>
                                 <div className="movie_infor-more_detail_container">
                                     <ul className="movie_infor-more-detail-wrap">
-                                        <li>Trạng thái: HD Vietsub</li>
-                                        <li>Thời lượng: 130 phút</li>
+                                        <li>Trạng thái: {movie?.status}</li>
+                                        <li>Thời lượng: {movie?.times}</li>
                                         <li>Tình trạng: Phim đang chiếu</li>
-                                        <li>Ngôn ngữ: Phụ đề Việt</li>
-                                        <li>Năm sản xuất: 2022</li>
-                                        <li>Quốc gia: Âu - Mỹ</li>
+                                        <li>Ngôn ngữ: {movie?.languageF}</li>
+                                        <li>Năm sản xuất: {movie?.year}</li>
+                                        <li>
+                                            Quốc gia: {movie?.country?.name}
+                                        </li>
                                         <li>
                                             Thể loại:
                                             <Link className="movie_type" to="">
@@ -139,16 +139,7 @@ const MovieDetail = () => {
                                     </ul>
                                     <div className="movie_content-container">
                                         <h3>Nội dung phim</h3>
-                                        <p>
-                                            Phi Công Siêu Đẳng Maverick kể về
-                                            sau hơn ba mươi năm phục vụ, Pete
-                                            “Maverick” Mitchell từng nổi danh là
-                                            một phi công thử nghiệm quả cảm hàng
-                                            đầu của Hải quân, né tránh cơ hội
-                                            thăng chức, điều khiến anh cảm thấy
-                                            bị bó buộc, để trở về làm chính
-                                            mình.
-                                        </p>
+                                        <p>{movie?.description}</p>
                                     </div>
                                 </div>
                             </div>
@@ -156,7 +147,7 @@ const MovieDetail = () => {
                                 <iframe
                                     className="trailer_container_detail"
                                     width="100%"
-                                    src="https://www.youtube.com/embed/giXco2jaZ_4"
+                                    src={movie?.trailer}
                                     title="YouTube video player"
                                     frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
