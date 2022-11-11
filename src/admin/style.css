@@ -116,6 +116,7 @@
     height: 3rem;
     margin-left: 1rem;
     cursor: pointer;
+    border:1px solid white;
 }
 .kind_create_form{
     display: flex;
@@ -143,6 +144,7 @@
     font-size: 1.8rem;
     color:white;
     transition: all ease 0.1s;
+    border:1px solid white;
 }
 .kind_create-create{
     margin-right: 2rem;
@@ -219,6 +221,7 @@
     cursor: pointer;
     font-size: 1.2rem;
     transition: all ease 0.1s;
+    border:1px solid white;
 }
 .manager_update_button{
     background-color: green;
@@ -246,6 +249,7 @@
     color:white;
     background-color: #F88600;
     transition: all ease 0.2s;
+    border:1px solid white;
 }
 .manager_create_container > button:hover{
     transform: scale(1.1);
@@ -392,7 +396,81 @@
     cursor: pointer;
     outline: none;
     transition: all ease 0.3s;
+    border:1px solid white;
 }
 .movie_create-button > button:hover{
     transform: scale(1.1);
+}
+.movie-delete_container{
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,0.2);
+    z-index: 100;
+}
+.movie-delete_wrap{
+    width: 40%;
+    padding:2rem;
+    background-color: white;
+    min-height: 10rem;
+    border-radius: 5rem;
+    box-shadow: 0 0 1rem 0.5rem #F88600;
+}
+.movie-delete_icons{
+    display: flex;
+    justify-content: flex-end;
+    font-size: 3.5rem;
+}
+.movie-delete_title{
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+    margin-top: 2rem;
+    color:red;
+    font-weight: 700;
+}
+.movie-delete_input{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+.movie-delete_input > input{
+    width: 60%;
+    height: 5rem;
+    border-radius: 10rem;
+    padding:0 1rem;
+    font-size: 2rem;
+    outline: none;
+}
+.movie-delete_button{
+    margin-top: 5rem;
+    display: flex;
+    justify-content: center;
+}
+.movie-delete_button > button{
+    width: 20%;
+    height: 4rem;
+    border-radius: 5rem;
+    outline: none;
+    cursor: pointer;
+    font-size: 1.6rem;
+    transition: all ease 0.2s;
+    border:1px solid white;
+}
+.movie-delete_button > button:hover{
+    transform: scale(1.1);
+}
+.movie-delete_button-confirm{
+    margin-right: 2rem;
+    background-color: green;
+    color:white;
+}
+.movie-delete_button-cancel{
+    background-color: red;
+    color:white;
 }

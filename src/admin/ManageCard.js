@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
-const ManageCard = ({ item }) => {
+const ManageCard = ({ item, setDeleteMovie }) => {
     const navigate = useNavigate();
     return (
         <div className="manager_card_container">
@@ -20,7 +20,14 @@ const ManageCard = ({ item }) => {
                 >
                     Cập nhật
                 </button>
-                <button className="manager_delete_button">Xóa</button>
+                <button
+                    onClick={() => {
+                        setDeleteMovie(item);
+                    }}
+                    className="manager_delete_button"
+                >
+                    Xóa
+                </button>
             </div>
         </div>
     );

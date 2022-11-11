@@ -2,12 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import DeleteMovie from "./DeleteMovie";
 import ManageCard from "./ManageCard";
 import "./style.css";
 const Manager = () => {
     const navigate = useNavigate();
 
     const [movies, setMovies] = useState([]);
+    const [deleteMovie, setDeleteMovie] = useState("");
 
     useEffect(() => {
         let here = true;
@@ -41,20 +43,33 @@ const Manager = () => {
                         Tạo phim
                     </button>
                 </div>
-                <div className="manager_searching">
-                    <input type="text" placeholder="Tìm phim" />
-                </div>
+                <form className="manager_searching">
+                    <input
+                        name="searching"
+                        type="text"
+                        placeholder="Tìm phim"
+                    />
+                </form>
                 <div className="row">
                     {movies?.map((item) => (
                         <div
                             key={item?._id + "manager"}
                             className="col c-6 m-4 l-3"
                         >
-                            <ManageCard item={item} />
+                            <ManageCard
+                                setDeleteMovie={setDeleteMovie}
+                                item={item}
+                            />
                         </div>
                     ))}
                 </div>
             </div>
+            {deleteMovie && (
+                <DeleteMovie
+                    deleteMovie={deleteMovie}
+                    setDeleteMovie={setDeleteMovie}
+                />
+            )}
         </div>
     );
 };
