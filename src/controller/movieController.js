@@ -81,7 +81,8 @@ class movieController {
                     path: "kinds",
                     select: "title slug",
                 })
-                .populate("chapters");
+                .populate("chapters")
+                .populate("country");
             res.status(200).json({ movie });
         } catch (err) {
             return res.status(500).json({
