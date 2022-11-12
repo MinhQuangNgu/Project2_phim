@@ -20,14 +20,16 @@ const Search = () => {
     const typeRef = useRef();
 
     const handleSearching = () => {
+        const searchingI = new URLSearchParams(search).get("searching") || "";
         const searchForm = {
             sort: sortRef.current.value,
             kind: kindRef.current.value,
             country: countryRef.current.value,
             type: typeRef.current.value,
+            searching: searchingI,
         };
 
-        const excludesFields = ["sort", "kind", "country", "type"];
+        const excludesFields = ["sort", "kind", "country", "type", "searching"];
         excludesFields.forEach((item) => {
             if (!searchForm[item]) {
                 delete searchForm[item];
@@ -35,8 +37,12 @@ const Search = () => {
         });
 
         const searching = new URLSearchParams(searchForm).toString();
-        navigate(`/tim-kiem?${searching}`);
+        navigate(`?${searching}`);
     };
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [search]);
 
     useEffect(() => {
         let here = true;

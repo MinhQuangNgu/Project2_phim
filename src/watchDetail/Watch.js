@@ -13,6 +13,10 @@ const Watch = () => {
     const [check, setCheck] = useState(false);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [slug]);
+
+    useEffect(() => {
         let here = true;
         let url = `/movie/getone/${slug}`;
         if (here) {

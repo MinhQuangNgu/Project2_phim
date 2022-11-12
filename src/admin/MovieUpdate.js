@@ -116,6 +116,9 @@ const MovieUpdate = () => {
             axios
                 .get(url)
                 .then((res) => {
+                    if (!here) {
+                        return;
+                    }
                     setKinds(res.data.kinds);
                 })
                 .catch((err) => {
@@ -134,6 +137,9 @@ const MovieUpdate = () => {
             axios
                 .get(url)
                 .then((res) => {
+                    if (!here) {
+                        return;
+                    }
                     setMovieDetail(res.data?.movie);
                 })
                 .catch((err) => {
@@ -152,6 +158,9 @@ const MovieUpdate = () => {
             axios
                 .get(url)
                 .then((res) => {
+                    if (!here) {
+                        return;
+                    }
                     setCountries(res.data.countries);
                 })
                 .catch((err) => {

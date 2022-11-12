@@ -123,6 +123,9 @@ const MovieCreate = () => {
             axios
                 .get(url)
                 .then((res) => {
+                    if (!here) {
+                        return;
+                    }
                     setKinds(res.data.kinds);
                 })
                 .catch((err) => {
@@ -140,6 +143,9 @@ const MovieCreate = () => {
             axios
                 .get(url)
                 .then((res) => {
+                    if (!here) {
+                        return;
+                    }
                     setCountries(res.data.countries);
                 })
                 .catch((err) => {
@@ -280,7 +286,7 @@ const MovieCreate = () => {
                         <div className="movie_create_form-items-select">
                             <select ref={typeRef}>
                                 <option value="phim-le">Phim Lẻ</option>
-                                <option value="phim-le">Phim Lẻ</option>
+                                <option value="phim-bo">Phim Bộ</option>
                                 <option value="anime">Anime</option>
                             </select>
                         </div>

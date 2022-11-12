@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import Card from "~/card/Card";
 import "./style.css";
 
-function Categary({ name, url }) {
+function Categary({ name, url, urlAl }) {
     const [infor, setInfor] = useState([]);
     useEffect(() => {
         let here = true;
@@ -13,6 +13,9 @@ function Categary({ name, url }) {
             axios
                 .get(url)
                 .then((res) => {
+                    if (!here) {
+                        return;
+                    }
                     setInfor(res.data?.movies);
                 })
                 .catch((err) => {
@@ -30,7 +33,7 @@ function Categary({ name, url }) {
                 <Link className="categary_title-link" to="/">
                     <h1>{name}</h1>
                 </Link>
-                <Link to="/" className="categary_watchAll-container">
+                <Link to={urlAl} className="categary_watchAll-container">
                     <div className="categary_watchAll-wrap">
                         <p style={{ margin: 0 }}>Xem tất cả</p>
                     </div>

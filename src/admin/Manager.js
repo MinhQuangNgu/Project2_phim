@@ -18,6 +18,9 @@ const Manager = () => {
             axios
                 .get(url)
                 .then((res) => {
+                    if (!here) {
+                        return;
+                    }
                     setMovies(res.data?.movies);
                 })
                 .catch((err) => {

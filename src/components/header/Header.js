@@ -18,6 +18,9 @@ function Header({ setTurnSlide }) {
             axios
                 .get(url)
                 .then((res) => {
+                    if (!here) {
+                        return;
+                    }
                     setKinds(res.data.kinds);
                 })
                 .catch((err) => {
@@ -35,6 +38,9 @@ function Header({ setTurnSlide }) {
             axios
                 .get(url)
                 .then((res) => {
+                    if (!here) {
+                        return;
+                    }
                     setCountries(res.data.countries);
                 })
                 .catch((err) => {
@@ -106,9 +112,16 @@ function Header({ setTurnSlide }) {
                                         <input
                                             onKeyDown={(e) => {
                                                 if (e.code === "Enter") {
-                                                    navigate(
-                                                        `/tim-kiem?searching=${searchingPcRef.current.value}`
-                                                    );
+                                                    if (
+                                                        searchingPcRef.current
+                                                            .value
+                                                    ) {
+                                                        navigate(
+                                                            `/tim-kiem?searching=${searchingPcRef.current.value}`
+                                                        );
+                                                    } else {
+                                                        navigate(`/tim-kiem`);
+                                                    }
                                                     searchingPcRef.current.value =
                                                         "";
                                                 }
@@ -118,7 +131,23 @@ function Header({ setTurnSlide }) {
                                             type="text"
                                         />
                                         <div className="header_search-icons">
-                                            <i className="fa-solid fa-magnifying-glass"></i>
+                                            <i
+                                                onClick={() => {
+                                                    if (
+                                                        searchingPcRef.current
+                                                            .value
+                                                    ) {
+                                                        navigate(
+                                                            `/tim-kiem?searching=${searchingPcRef.current.value}`
+                                                        );
+                                                    } else {
+                                                        navigate(`/tim-kiem`);
+                                                    }
+                                                    searchingPcRef.current.value =
+                                                        "";
+                                                }}
+                                                className="fa-solid fa-magnifying-glass"
+                                            ></i>
                                         </div>
                                     </div>
                                 </div>
@@ -169,9 +198,16 @@ function Header({ setTurnSlide }) {
                                             ref={searchingRef}
                                             onKeyDown={(e) => {
                                                 if (e.code === "Enter") {
-                                                    navigate(
-                                                        `/tim-kiem?searching=${searchingRef.current.value}`
-                                                    );
+                                                    if (
+                                                        searchingRef.current
+                                                            .value
+                                                    ) {
+                                                        navigate(
+                                                            `/tim-kiem?searching=${searchingRef.current.value}`
+                                                        );
+                                                    } else {
+                                                        navigate(`/tim-kiem`);
+                                                    }
                                                     searchingRef.current.value =
                                                         "";
                                                 }

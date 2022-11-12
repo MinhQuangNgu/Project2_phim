@@ -30,12 +30,19 @@ const MovieDetail = () => {
     const [check, setCheck] = useState(false);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [slug]);
+
+    useEffect(() => {
         let here = true;
         let url = `/movie/getone/${slug}`;
         if (here) {
             axios
                 .get(url)
                 .then((res) => {
+                    if (!here) {
+                        return;
+                    }
                     if (!res.data?.movie) {
                         setCheck(true);
                     }
