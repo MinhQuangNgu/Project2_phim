@@ -81,6 +81,7 @@ const Search = () => {
     }, []);
 
     useEffect(() => {
+        console.log("herer");
         const url = `/movie${search}`;
         dispatch(isLoading());
         axios

@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
-import { Navigation, Pagination, Scrollbar, Autoplay } from "swiper";
+import { Navigation, Scrollbar, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import SwiperCard from "~/card/SwiperCard";
+import axios from "axios";
+import { toast } from "react-toastify";
 function Recommend() {
+    const [infor, setInfor] = useState([]);
+    useEffect(() => {
+        let here = true;
+        if (here) {
+            axios
+                .get("/movie?limit=8")
+                .then((res) => {
+                    if (!here) {
+                        return;
+                    }
+                    setInfor(res.data?.movies);
+                })
+                .catch((err) => {
+                    toast.error(err?.response?.data?.msg);
+                });
+        }
+
+        return () => {
+            here = false;
+        };
+    }, []);
     return (
         <div className="recommend_container">
             <div className="recommend_title">
@@ -27,33 +50,11 @@ function Recommend() {
                             }}
                             loop
                         >
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
+                            {infor?.map((item) => (
+                                <SwiperSlide key={item?._id + "asd"}>
+                                    <SwiperCard item={item} />
+                                </SwiperSlide>
+                            ))}
                         </Swiper>
                     </div>
                     <div className="col c-0 m-12 l-0">
@@ -69,33 +70,11 @@ function Recommend() {
                             }}
                             loop
                         >
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
+                            {infor?.map((item) => (
+                                <SwiperSlide key={item?._id + "asd"}>
+                                    <SwiperCard item={item} />
+                                </SwiperSlide>
+                            ))}
                         </Swiper>
                     </div>
                     <div className="col c-0 m-0 l-12">
@@ -111,33 +90,11 @@ function Recommend() {
                             }}
                             loop
                         >
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <SwiperCard />
-                            </SwiperSlide>
+                            {infor?.map((item) => (
+                                <SwiperSlide key={item?._id + "asd"}>
+                                    <SwiperCard item={item} />
+                                </SwiperSlide>
+                            ))}
                         </Swiper>
                     </div>
                 </div>

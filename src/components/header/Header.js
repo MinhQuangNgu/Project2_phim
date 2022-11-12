@@ -93,13 +93,13 @@ function Header({ setTurnSlide }) {
                                         <li>Phim Top</li>
                                     </Link>
                                     <Navbar
-                                        sea="the-loai"
+                                        sea="kind"
                                         item={kinds}
                                         isType={true}
                                         name="Thể Loại"
                                     />
                                     <Navbar
-                                        sea="quoc-gia"
+                                        sea="country"
                                         item={countries}
                                         isType={false}
                                         name="Quốc gia"

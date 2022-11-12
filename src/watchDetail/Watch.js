@@ -48,13 +48,16 @@ const Watch = () => {
                                 <Link className="watch_top-items" to="/">
                                     <li>Home /</li>
                                 </Link>
-                                <Link className="watch_top-items" to="/">
-                                    <li>Hành động /</li>
+                                <Link
+                                    className="watch_top-items"
+                                    to={`/phim/${movie?.slug}`}
+                                >
+                                    <li>{movie?.title} /</li>
                                 </Link>
-                                <Link className="watch_top-items" to="/">
-                                    <li>Phi Cơ Siêu Đẳng /</li>
-                                </Link>
-                                <Link className="watch_top-items" to="/">
+                                <Link
+                                    className="watch_top-items"
+                                    to={`/xem-phim/${movie?.slug}`}
+                                >
                                     <li>Tập full</li>
                                 </Link>
                             </ul>
