@@ -22,7 +22,7 @@ class apiRequest {
         return this;
     }
     searching() {
-        const search = this.queryString.search;
+        const search = this.queryString.searching;
         if (search) {
             this.query = this.query.find({
                 $text: {
@@ -80,7 +80,6 @@ class movieController {
             } else if (req.query.kind && !req.query.country) {
                 const slug = req.query.kind;
                 const kind = await Kind.findOne({ slug });
-
                 const api = new apiRequest(
                     Movie.find({ kinds: kind._id })
                         .populate({
@@ -168,17 +167,11 @@ class movieController {
                 .populate({
                     path: "kinds",
                     select: "title slug",
-                    match: {
-                        slug: req.query.kind,
-                    },
                 })
                 .populate("chapters")
                 .populate({
                     path: "country",
                     select: "name slug",
-                    match: {
-                        slug: req.query.country,
-                    },
                 });
             res.status(200).json({ movie });
         } catch (err) {
