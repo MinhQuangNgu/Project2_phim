@@ -12,7 +12,7 @@ router.delete(
     middleWareController.verifyAdmin,
     chapterController.deleteChapter
 );
-router.put(
+router.post(
     "/update/:id",
     middleWareController.verifyAdmin,
     chapterController.updateChapter

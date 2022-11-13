@@ -38,7 +38,7 @@ class chapterController {
                 return res.status(400).json({ msg: "Phim này không tồn tại." });
             }
             movie.chapters = movie.chapters.map((item) => {
-                if (item._id !== chapter._id) {
+                if (item !== chapter._id) {
                     return item;
                 }
             });
