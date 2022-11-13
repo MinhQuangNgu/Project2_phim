@@ -528,7 +528,7 @@
 .create_chapter_container > input{
     margin-right: 2rem;
     width: 70%;
-    padding:0 2rem;
+    padding:0 1rem;
     border-radius: 5rem;
     font-size: 2rem;
 }
@@ -552,4 +552,68 @@
 .update_chapter_button-update{
     background-color: green;
     color:white;
+}
+.delete_chapter_container{
+    margin-bottom: 5rem;
+    font-size: 1.7rem;
+    display: flex;
+    justify-content: center;
+    color:red;
+    font-weight: 700;
+    align-items: center;
+}
+.delete_chapter_container > button{
+    margin-left: 1rem;
+    cursor: pointer;
+    outline: none;
+    border:none;
+    font-size: 1.8rem;
+}
+.delete_chapter_container > button:hover{
+    transform: scale(1.1);
+}
+.delete_chapter_button-confirm{
+    width: 10rem;
+    height: 4rem;
+    border-radius: 5rem;
+    background-color: red;
+    color:white;
+}
+.delete_chapter_button-cancel{
+    width: 10rem;
+    height: 4rem;
+    border-radius: 5rem;
+    background-color: grey;
+    color:white;
+}
+.update_chapter_detail_container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5rem;
+    align-items: center;
+}
+.update_chapter_detail_container > input{
+    width: 60%;
+    height: 5rem;
+    border-radius: 5rem;
+    padding:0 1rem;
+    outline: none;
+    font-size: 2rem;
+}
+.update_chapter_detail_container > button{
+    width: 10rem;
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    height: 4rem;
+    border-radius: 5rem;
+    outline: none;
+    border:none;
+    cursor: pointer;
+    color:white;
+}
+.update_chapter_detail_container > button:hover{
+    transform: scale(1.1);
+}
+.update_chapter_detail_container > label{
+    font-size: 1.7rem;
 }

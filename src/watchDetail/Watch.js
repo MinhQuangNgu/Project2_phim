@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Comment from "~/comment/Comment";
 import NotFound from "~/notfound/NotFound";
@@ -12,9 +12,21 @@ const Watch = () => {
     const [movie, setMovie] = useState({});
     const [check, setCheck] = useState(false);
 
+    const [chap, setChap] = useState(1);
+
+    const chapRef = useRef(1);
+
+    const { search } = useLocation();
+
+    useEffect(() => {
+        const chapter = new URLSearchParams(search).get("tap") || 1;
+        chapRef.current = chapter;
+        setChap(chapter);
+    }, [search]);
+
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, [slug]);
+    }, [slug, search]);
 
     useEffect(() => {
         let here = true;
@@ -65,7 +77,14 @@ const Watch = () => {
                                 <iframe
                                     className="movie_iframe"
                                     width="100%"
-                                    src={movie?.moviesLink}
+                                    src={
+                                        chapRef.current === 1
+                                            ? movie?.moviesLink
+                                            : movie?.chapters &&
+                                              movie?.chapters[
+                                                  chapRef.current - 2
+                                              ]?.movieLink
+                                    }
                                     frameBorder="0"
                                     scrolling="0"
                                     allowFullScreen
@@ -73,21 +92,47 @@ const Watch = () => {
                                 <div className="watcher_name_wrap">
                                     <h3>Phi Cơ Siêu Đẳng (Mavel Rick 2022)</h3>
                                 </div>
-                                <div className="episode_container">
-                                    {movie?.type === "phim-le" ? (
-                                        <Link className="link_episode" to="/">
+                                {movie?.type === "phim-le" ? (
+                                    <div className="episode_container">
+                                        <Link className="link_episode" to="?">
                                             <div className="episode_items active">
                                                 Full
                                             </div>
                                         </Link>
-                                    ) : (
-                                        <Link className="link_episode" to="/">
-                                            <div className="episode_items active">
+                                    </div>
+                                ) : (
+                                    <div className="episode_container">
+                                        <Link className="link_episode" to="?">
+                                            <div
+                                                className={`${
+                                                    chapRef.current == 1
+                                                        ? "episode_items active"
+                                                        : "episode_items"
+                                                }`}
+                                            >
                                                 Tập 1
                                             </div>
                                         </Link>
-                                    )}
-                                </div>
+                                        {movie?.chapters?.map((item, index) => (
+                                            <Link
+                                                key={item?._id + "asd"}
+                                                className="link_episode"
+                                                to={`?tap=${index + 2}`}
+                                            >
+                                                <div
+                                                    className={`${
+                                                        chapRef.current ==
+                                                        index + 2
+                                                            ? "episode_items active"
+                                                            : "episode_items"
+                                                    }`}
+                                                >
+                                                    Tập {index + 2}
+                                                </div>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                             <div className="comment_container">
                                 <Comment />

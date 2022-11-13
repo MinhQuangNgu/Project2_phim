@@ -8,31 +8,26 @@ const UpdateChapter = () => {
     const { id } = useParams();
 
     const [movie, setMovie] = useState({});
+    const [deleteMovie, setDeleteMovie] = useState("");
+    const [updateMovie, setUpdateMovie] = useState("");
+    const [reRender, setReRender] = useState(false);
 
     const auth = useSelector((state) => state.auth);
 
     const movieLinkRef = useRef();
+    const updateRef = useRef();
 
     useEffect(() => {
-        let here = true;
-        if (here) {
-            const url = `/movie/getone/${id}`;
-            axios
-                .get(url)
-                .then((res) => {
-                    if (!here) {
-                        return;
-                    }
-                    setMovie(res.data?.movie);
-                })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.msg);
-                });
-        }
-        return () => {
-            here = false;
-        };
-    }, []);
+        const url = `/movie/getone/${id}`;
+        axios
+            .get(url)
+            .then((res) => {
+                setMovie(res.data?.movie);
+            })
+            .catch((err) => {
+                toast.error(err?.response?.data?.msg);
+            });
+    }, [reRender]);
 
     const handleCreateChapter = async () => {
         if (!movieLinkRef.current.value) {
@@ -55,6 +50,52 @@ const UpdateChapter = () => {
         } catch (err) {
             toast.error(err?.response?.data?.msg);
         }
+        setReRender(!reRender);
+        movieLinkRef.current.value = "";
+    };
+
+    const handleDeleteChapter = async () => {
+        const confirm = window.confirm("Bạn thực sự muốn xóa nó?");
+        if (confirm) {
+            try {
+                const data = await axios.delete(
+                    `/chapter/delete/${deleteMovie?.item?._id}`,
+                    {
+                        headers: {
+                            token: `Bearer ${auth?.user?.accessToken}`,
+                        },
+                    }
+                );
+                toast.success(data?.data?.msg);
+            } catch (err) {
+                toast.error(err?.response?.data?.msg);
+            }
+        }
+        setDeleteMovie("");
+        setReRender(!reRender);
+    };
+    const handleUpdateChapter = async () => {
+        const confirm = window.confirm("Bạn thực sự muốn cập nhật nó?");
+        if (confirm) {
+            try {
+                const data = await axios.post(
+                    `/chapter/update/${updateMovie?.item?._id}`,
+                    {
+                        movieLink: updateRef.current?.value,
+                    },
+                    {
+                        headers: {
+                            token: `Bearer ${auth?.user?.accessToken}`,
+                        },
+                    }
+                );
+                toast.success(data?.data?.msg);
+            } catch (err) {
+                toast.error(err?.response?.data?.msg);
+            }
+        }
+        setUpdateMovie("");
+        setReRender(!reRender);
     };
     return (
         <div className="grid wide">
@@ -63,6 +104,51 @@ const UpdateChapter = () => {
                     <div className="update_chapter_title">
                         <h1>Cập nhật tập phim</h1>
                     </div>
+                    {deleteMovie && (
+                        <div className="delete_chapter_container">
+                            <span>
+                                Bạn có thực sự muốn xóa tập {deleteMovie?.tap}?
+                            </span>
+                            <button
+                                onClick={handleDeleteChapter}
+                                className="delete_chapter_button-confirm"
+                            >
+                                Xóa
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setDeleteMovie("");
+                                }}
+                                className="delete_chapter_button-cancel"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    )}
+                    {updateMovie && (
+                        <div className="update_chapter_detail_container">
+                            <label>Tập {updateMovie?.tap}:</label>
+                            <input
+                                ref={updateRef}
+                                type="text"
+                                defaultValue={updateMovie?.item?.movieLink}
+                            />
+                            <button
+                                onClick={handleUpdateChapter}
+                                style={{ backgroundColor: "green" }}
+                            >
+                                Cập Nhật
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setUpdateMovie("");
+                                }}
+                                style={{ backgroundColor: "grey" }}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    )}
                     <div className="create_chapter_container">
                         <input ref={movieLinkRef} type="text" />
                         <button onClick={handleCreateChapter}>
@@ -74,10 +160,30 @@ const UpdateChapter = () => {
                             <li key={item?._id + "items"}>
                                 Tập {index + 2}: {item?.movieLink}
                                 <div className="update_chapter_button">
-                                    <button className="update_chapter_button-delete">
+                                    <button
+                                        onClick={() => {
+                                            setDeleteMovie({
+                                                item,
+                                                tap: index + 2,
+                                            });
+                                        }}
+                                        className="update_chapter_button-delete"
+                                    >
                                         Xóa
                                     </button>
-                                    <button className="update_chapter_button-update">
+                                    <button
+                                        onClick={() => {
+                                            if (updateRef.current) {
+                                                updateRef.current.value =
+                                                    item?.movieLink;
+                                            }
+                                            setUpdateMovie({
+                                                item,
+                                                tap: index + 2,
+                                            });
+                                        }}
+                                        className="update_chapter_button-update"
+                                    >
                                         Cập nhật
                                     </button>
                                 </div>
