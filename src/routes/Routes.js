@@ -2,6 +2,7 @@ import Login from "~/admin/Login";
 import Manager from "~/admin/Manager";
 import MovieCreate from "~/admin/MovieCreate";
 import MovieUpdate from "~/admin/MovieUpdate";
+import UpdateChapter from "~/admin/UpdateChapter";
 import Home from "~/components/home/Home";
 import MovieDetail from "~/movieDetail/MovieDetail";
 import Search from "~/search/Search";
@@ -43,5 +44,9 @@ export const privateRouter = [
     {
         element: MovieUpdate,
         path: "/admin/movie/update/:id",
+    },
+    {
+        element: UpdateChapter,
+        path: "/admin/chapter/update/:id",
     },
 ];

@@ -74,10 +74,16 @@ const Watch = () => {
                                     <h3>Phi Cơ Siêu Đẳng (Mavel Rick 2022)</h3>
                                 </div>
                                 <div className="episode_container">
-                                    {!movie?.isSeries && (
+                                    {movie?.type === "phim-le" ? (
                                         <Link className="link_episode" to="/">
                                             <div className="episode_items active">
                                                 Full
+                                            </div>
+                                        </Link>
+                                    ) : (
+                                        <Link className="link_episode" to="/">
+                                            <div className="episode_items active">
+                                                Tập 1
                                             </div>
                                         </Link>
                                     )}

@@ -20,6 +20,16 @@ const ManageCard = ({ item, setDeleteMovie }) => {
                 >
                     Cập nhật
                 </button>
+                {item?.type !== "phim-le" && (
+                    <button
+                        onClick={() => {
+                            navigate(`/admin/chapter/update/${item?.slug}`);
+                        }}
+                        className="manager_update_button"
+                    >
+                        Chapter
+                    </button>
+                )}
                 <button
                     onClick={() => {
                         setDeleteMovie(item);

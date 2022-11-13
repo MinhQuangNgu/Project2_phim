@@ -474,3 +474,82 @@
     background-color: red;
     color:white;
 }
+.update_chapter_container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem;
+}
+.update_chapter_wrap{
+    width: 70%;
+    min-height: 10rem;
+    background-color: white;
+    border-radius: 5rem;
+    padding:2rem;
+}
+.update_chapter_title{
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.7rem;
+    margin-bottom: 4rem;
+}
+.update_chapter_list_container{
+    list-style: none;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+.update_chapter_list_container > li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.create_chapter_container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4rem;
+}
+.create_chapter_container > button{
+    width: 20%;
+    height: 5rem;
+    border-radius: 5rem;
+    outline: none;
+    background-color: #F88600;
+    color:white;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: all ease 0.2s;
+    border:none;
+}
+.create_chapter_container > button:hover{
+    transform: scale(1.1);
+}
+.create_chapter_container > input{
+    margin-right: 2rem;
+    width: 70%;
+    padding:0 2rem;
+    border-radius: 5rem;
+    font-size: 2rem;
+}
+.update_chapter_button > button{
+    margin-left: 2rem;
+    width: 10rem;
+    height: 4rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    border-radius: 5rem;
+    outline: none;
+    border:none;
+}
+.update_chapter_button > button:hover{
+    transform: scale(1.05);
+}
+.update_chapter_button-delete{
+    background-color: red;
+    color:white;
+}
+.update_chapter_button-update{
+    background-color: green;
+    color:white;
+}
