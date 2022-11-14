@@ -22,6 +22,9 @@
     border-radius: 2rem;
     padding-left: 1rem;
 }
+.search_items_container{
+    min-height: 40rem;
+}
 .search_button{
     width: 10rem;
     height: 4rem;

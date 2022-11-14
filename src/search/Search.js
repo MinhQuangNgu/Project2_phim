@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Card from "~/card/Card";
+import Paginating from "~/paginating/Paginating";
 import { isFailing, isLoading, isSuccess } from "~/redux/slice/auth";
 import "./style.css";
 const Search = () => {
@@ -13,6 +14,8 @@ const Search = () => {
     const [kinds, setKinds] = useState([]);
     const [countries, setCountries] = useState([]);
     const navigate = useNavigate();
+
+    const countRef = useRef(1);
 
     const sortRef = useRef();
     const kindRef = useRef();
@@ -81,14 +84,15 @@ const Search = () => {
     }, []);
 
     useEffect(() => {
-        console.log("herer");
-        const url = `/movie${search}`;
+        const url = search ? `/movie${search}&limit=20` : `/movie?limit=20`;
+        console.log(url);
         dispatch(isLoading());
         axios
             .get(url)
             .then((res) => {
                 dispatch(isSuccess());
                 setMovies(res.data);
+                countRef.current = res.data?.count;
             })
             .catch(() => {
                 dispatch(isFailing());
@@ -172,6 +176,9 @@ const Search = () => {
                     )}
                 </div>
             </div>
+            {movies?.count && (
+                <Paginating count={countRef.current} limit={20} />
+            )}
         </div>
     );
 };
