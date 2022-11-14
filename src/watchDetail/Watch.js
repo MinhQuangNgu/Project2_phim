@@ -1,13 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Comment from "~/comment/Comment";
 import NotFound from "~/notfound/NotFound";
+import { isFailing, isLoading, isSuccess } from "~/redux/slice/auth";
 import "./style.css";
 
 const Watch = ({ cache }) => {
     const { slug } = useParams();
+
+    const dispatch = useDispatch();
 
     const [movie, setMovie] = useState({});
     const [check, setCheck] = useState(false);
@@ -34,6 +38,7 @@ const Watch = ({ cache }) => {
         if (cache.current[url]) {
             return setMovie(cache.current[url]);
         }
+        dispatch(isLoading());
         if (here) {
             axios
                 .get(url)
@@ -42,10 +47,12 @@ const Watch = ({ cache }) => {
                         setCheck(true);
                     }
                     setMovie(res.data?.movie);
+                    dispatch(isSuccess());
                     cache.current[url] = res.data?.movie;
                 })
                 .catch((err) => {
                     setCheck(true);
+                    dispatch(isFailing());
                     toast.error(err?.response?.data?.msg);
                 });
         }

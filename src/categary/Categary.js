@@ -1,17 +1,22 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Card from "~/card/Card";
+import { isFailing, isLoading, isSuccess } from "~/redux/slice/auth";
 import "./style.css";
 
 function Categary({ name, url, urlAl, cache }) {
     const [infor, setInfor] = useState([]);
+
+    const dispatch = useDispatch();
     useEffect(() => {
         let here = true;
         if (cache.current[url]) {
             return setInfor(cache.current[url]);
         }
+        dispatch(isLoading());
         if (here) {
             axios
                 .get(url)
@@ -21,9 +26,11 @@ function Categary({ name, url, urlAl, cache }) {
                     }
                     setInfor(res.data?.movies);
                     cache.current[url] = res.data?.movies;
+                    dispatch(isSuccess());
                 })
                 .catch((err) => {
                     toast.error(err?.response?.data?.msg);
+                    dispatch(isFailing());
                 });
         }
 

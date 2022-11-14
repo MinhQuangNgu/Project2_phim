@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 import SwiperCard from "~/card/SwiperCard";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 function Recommend({ cache }) {
     const [infor, setInfor] = useState([]);
     useEffect(() => {

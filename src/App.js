@@ -14,6 +14,7 @@ import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import AdminManger from "./admin/AdminManger";
 import NotFound from "./notfound/NotFound";
+import Loading from "./loading/Loading";
 
 function App() {
     const [turnSlide, setTurnSlide] = useState(false);
@@ -91,6 +92,7 @@ function App() {
                     style={{ fontSize: "1.5rem", width: "50%" }}
                 />
             </div>
+            {auth.loading && <Loading />}
         </Router>
     );
 }

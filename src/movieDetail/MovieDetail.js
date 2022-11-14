@@ -1,13 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Comment from "~/comment/Comment";
 import NotFound from "~/notfound/NotFound";
+import { isFailing, isLoading, isSuccess } from "~/redux/slice/auth";
 import "./style.css";
 
 const MovieDetail = ({ cache }) => {
     const { slug } = useParams();
+
+    const dispatch = useDispatch();
 
     const kindRef = useRef("");
 
@@ -49,6 +53,7 @@ const MovieDetail = ({ cache }) => {
             }
             return;
         }
+        dispatch(isLoading());
         if (here) {
             axios
                 .get(url)
@@ -59,6 +64,7 @@ const MovieDetail = ({ cache }) => {
                     if (!res.data?.movie) {
                         setCheck(true);
                     }
+                    dispatch(isSuccess());
                     setMovie(res.data?.movie);
                     cache.current[url] = res.data?.movie;
                     if (!kindRef.current) {
@@ -74,6 +80,7 @@ const MovieDetail = ({ cache }) => {
                 })
                 .catch((err) => {
                     setCheck(true);
+                    dispatch(isFailing());
                     toast.error(err?.response?.data?.msg);
                 });
         }
