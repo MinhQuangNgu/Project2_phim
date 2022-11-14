@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import DeleteMovie from "./DeleteMovie";
 import ManageCard from "./ManageCard";
@@ -11,26 +11,23 @@ const Manager = () => {
     const [movies, setMovies] = useState([]);
     const [deleteMovie, setDeleteMovie] = useState("");
 
+    const searchRef = useRef();
+
+    const { search } = useLocation();
+
     useEffect(() => {
-        let here = true;
-        let url = "/movie";
-        if (here) {
-            axios
-                .get(url)
-                .then((res) => {
-                    if (!here) {
-                        return;
-                    }
-                    setMovies(res.data?.movies);
-                })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.msg);
-                });
-        }
-        return () => {
-            here = false;
-        };
-    }, []);
+        const searching = new URLSearchParams(search).get("searching") || "";
+
+        let url = searching ? `/movie?searching=${searching}` : "/movie";
+        axios
+            .get(url)
+            .then((res) => {
+                setMovies(res.data?.movies);
+            })
+            .catch((err) => {
+                toast.error(err?.response?.data?.msg);
+            });
+    }, [search]);
     return (
         <div className="grid wide">
             <div className="manager_container">
@@ -46,13 +43,25 @@ const Manager = () => {
                         Tạo phim
                     </button>
                 </div>
-                <form className="manager_searching">
+                <div className="manager_searching">
                     <input
+                        ref={searchRef}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                if (searchRef.current.value) {
+                                    navigate(
+                                        `?searching=${searchRef.current?.value}`
+                                    );
+                                } else {
+                                    navigate("?");
+                                }
+                            }
+                        }}
                         name="searching"
                         type="text"
                         placeholder="Tìm phim"
                     />
-                </form>
+                </div>
                 <div className="row">
                     {movies?.map((item) => (
                         <div
