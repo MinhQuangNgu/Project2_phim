@@ -7,7 +7,7 @@ import Card from "~/card/Card";
 import Paginating from "~/paginating/Paginating";
 import { isFailing, isLoading, isSuccess } from "~/redux/slice/auth";
 import "./style.css";
-const Search = () => {
+const Search = ({ cache }) => {
     const { search } = useLocation();
     const [movies, setMovies] = useState({});
     const dispatch = useDispatch();
@@ -49,12 +49,16 @@ const Search = () => {
 
     useEffect(() => {
         let here = true;
+        const url = "/kind";
+        if (cache.current[url]) {
+            return setKinds(cache.current[url]);
+        }
         if (here) {
-            const url = "/kind";
             axios
                 .get(url)
                 .then((res) => {
                     setKinds(res.data.kinds);
+                    cache.current[url] = res.data.kinds;
                 })
                 .catch((err) => {
                     toast.error(err?.response?.data?.msg);
@@ -66,12 +70,16 @@ const Search = () => {
     }, []);
     useEffect(() => {
         let here = true;
+        const url = "/country";
+        if (cache.current[url]) {
+            return setCountries(cache.current[url]);
+        }
         if (here) {
-            const url = "/country";
             axios
                 .get(url)
                 .then((res) => {
                     setCountries(res.data.countries);
+                    cache.current[url] = res.data.countries;
                 })
                 .catch((err) => {
                     dispatch(isFailing());
@@ -85,13 +93,18 @@ const Search = () => {
 
     useEffect(() => {
         const url = search ? `/movie${search}&limit=20` : `/movie?limit=20`;
-        console.log(url);
+        if (cache.current[url]) {
+            setMovies(cache.current[url]);
+            countRef.current = cache.current[url]?.count;
+            return;
+        }
         dispatch(isLoading());
         axios
             .get(url)
             .then((res) => {
                 dispatch(isSuccess());
                 setMovies(res.data);
+                cache.current[url] = res.data;
                 countRef.current = res.data?.count;
             })
             .catch(() => {

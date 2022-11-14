@@ -6,7 +6,7 @@ import "./style.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const AdminManger = () => {
+const AdminManger = ({ cache }) => {
     const dispatch = useDispatch();
 
     const kindRef = useRef(null);
@@ -120,37 +120,46 @@ const AdminManger = () => {
 
     useEffect(() => {
         let here = true;
-        dispatch(isLoading());
+        const url = "/kind";
+        if (cache.current[url]) {
+            return setKinds(cache.current[url]);
+        }
         if (here) {
             axios
-                .get("/kind")
+                .get(url)
                 .then((res) => {
-                    dispatch(isSuccess());
-                    setKinds(res.data?.kinds);
+                    if (!here) {
+                        return;
+                    }
+                    setKinds(res.data.kinds);
+                    cache.current[url] = res.data.kinds;
                 })
                 .catch((err) => {
-                    dispatch(isFailing());
-                    toast.error(err.message);
+                    toast.error(err?.response?.data?.msg);
                 });
         }
         return () => {
             here = false;
         };
     }, [updateTime]);
-
     useEffect(() => {
         let here = true;
-        dispatch(isLoading());
+        const url = "/country";
+        if (cache.current[url]) {
+            return setCountries(cache.current[url]);
+        }
         if (here) {
             axios
-                .get("/country")
+                .get(url)
                 .then((res) => {
-                    dispatch(isSuccess());
-                    setCountries(res.data?.countries);
+                    if (!here) {
+                        return;
+                    }
+                    setCountries(res.data.countries);
+                    cache.current[url] = res.data.countries;
                 })
                 .catch((err) => {
-                    dispatch(isFailing());
-                    toast.error(err.message);
+                    toast.error(err?.response?.data?.msg);
                 });
         }
         return () => {

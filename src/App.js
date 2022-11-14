@@ -10,33 +10,35 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import HeaderSlice from "./components/header/HeaderSlice";
 import HeaderSliceD from "./components/header/HeaderSliceD";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import AdminManger from "./admin/AdminManger";
 import NotFound from "./notfound/NotFound";
 
 function App() {
     const [turnSlide, setTurnSlide] = useState(false);
+
+    const cacheRef = useRef({});
     const auth = useSelector((state) => state.auth);
     return (
         <Router>
             <div className="App">
-                <Header setTurnSlide={setTurnSlide} />
-                {auth.user?.accessToken && <AdminManger />}
+                <Header cache={cacheRef} setTurnSlide={setTurnSlide} />
+                {auth.user?.accessToken && <AdminManger cache={cacheRef} />}
                 <Routes>
                     {publicRouter.map((item) => {
                         const Page = item.element;
                         return item.exact ? (
                             <Route
                                 key={item.path}
-                                element={<Page />}
+                                element={<Page cache={cacheRef} />}
                                 path={item.path}
                                 exact
                             />
                         ) : (
                             <Route
                                 key={item.path}
-                                element={<Page />}
+                                element={<Page cache={cacheRef} />}
                                 path={item.path}
                             />
                         );
@@ -47,14 +49,14 @@ function App() {
                             return item.exact ? (
                                 <Route
                                     key={item.path}
-                                    element={<Page />}
+                                    element={<Page cache={cacheRef} />}
                                     path={item.path}
                                     exact
                                 />
                             ) : (
                                 <Route
                                     key={item.path}
-                                    element={<Page />}
+                                    element={<Page cache={cacheRef} />}
                                     path={item.path}
                                 />
                             );
@@ -65,6 +67,7 @@ function App() {
                 <div className="row">
                     <div className="col c-12 m-0 l-0">
                         <HeaderSlice
+                            cache={cacheRef}
                             turnSlide={turnSlide}
                             setTurnSlide={setTurnSlide}
                         />

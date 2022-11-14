@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { isFailing, isLoading, isSuccess } from "~/redux/slice/auth";
 import KindBox from "./KindBox";
 import "./style.css";
-const MovieUpdate = () => {
+const MovieUpdate = ({ cache }) => {
     const { id } = useParams();
     const [image, setImage] = useState("");
     const [kinds, setKinds] = useState([]);
@@ -111,8 +111,11 @@ const MovieUpdate = () => {
 
     useEffect(() => {
         let here = true;
+        const url = "/kind";
+        if (cache.current[url]) {
+            return setKinds(cache.current[url]);
+        }
         if (here) {
-            const url = "/kind";
             axios
                 .get(url)
                 .then((res) => {
@@ -120,6 +123,7 @@ const MovieUpdate = () => {
                         return;
                     }
                     setKinds(res.data.kinds);
+                    cache.current[url] = res.data.kinds;
                 })
                 .catch((err) => {
                     toast.error(err?.response?.data?.msg);
@@ -132,29 +136,11 @@ const MovieUpdate = () => {
 
     useEffect(() => {
         let here = true;
-        if (here) {
-            const url = `/movie/getone/${id}`;
-            axios
-                .get(url)
-                .then((res) => {
-                    if (!here) {
-                        return;
-                    }
-                    setMovieDetail(res.data?.movie);
-                })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.msg);
-                });
+        const url = "/country";
+        if (cache.current[url]) {
+            return setCountries(cache.current[url]);
         }
-        return () => {
-            here = false;
-        };
-    }, []);
-
-    useEffect(() => {
-        let here = true;
         if (here) {
-            const url = "/country";
             axios
                 .get(url)
                 .then((res) => {
@@ -162,6 +148,32 @@ const MovieUpdate = () => {
                         return;
                     }
                     setCountries(res.data.countries);
+                    cache.current[url] = res.data.countries;
+                })
+                .catch((err) => {
+                    toast.error(err?.response?.data?.msg);
+                });
+        }
+        return () => {
+            here = false;
+        };
+    }, []);
+
+    useEffect(() => {
+        let here = true;
+        const url = `/movie/getone/${id}`;
+        if (cache.current[url]) {
+            setMovieDetail(cache.current[url]);
+        }
+        if (here) {
+            axios
+                .get(url)
+                .then((res) => {
+                    if (!here) {
+                        return;
+                    }
+                    setMovieDetail(res.data?.movie);
+                    cache.current[url] = res.data?.movie;
                 })
                 .catch((err) => {
                     toast.error(err?.response?.data?.msg);

@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { isFailing, isLoading, isSuccess } from "~/redux/slice/auth";
 import KindBox from "./KindBox";
 import "./style.css";
-const MovieCreate = () => {
+const MovieCreate = ({ cache }) => {
     const [image, setImage] = useState("");
     const [kinds, setKinds] = useState([]);
     const [countries, setCountries] = useState([]);
@@ -118,8 +118,11 @@ const MovieCreate = () => {
 
     useEffect(() => {
         let here = true;
+        const url = "/kind";
+        if (cache.current[url]) {
+            return setKinds(cache.current[url]);
+        }
         if (here) {
-            const url = "/kind";
             axios
                 .get(url)
                 .then((res) => {
@@ -127,6 +130,7 @@ const MovieCreate = () => {
                         return;
                     }
                     setKinds(res.data.kinds);
+                    cache.current[url] = res.data.kinds;
                 })
                 .catch((err) => {
                     toast.error(err?.response?.data?.msg);
@@ -138,8 +142,11 @@ const MovieCreate = () => {
     }, []);
     useEffect(() => {
         let here = true;
+        const url = "/country";
+        if (cache.current[url]) {
+            return setCountries(cache.current[url]);
+        }
         if (here) {
-            const url = "/country";
             axios
                 .get(url)
                 .then((res) => {
@@ -147,6 +154,7 @@ const MovieCreate = () => {
                         return;
                     }
                     setCountries(res.data.countries);
+                    cache.current[url] = res.data.countries;
                 })
                 .catch((err) => {
                     toast.error(err?.response?.data?.msg);

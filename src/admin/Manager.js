@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import DeleteMovie from "./DeleteMovie";
 import ManageCard from "./ManageCard";
 import "./style.css";
-const Manager = () => {
+const Manager = ({ cache }) => {
     const navigate = useNavigate();
 
     const [movies, setMovies] = useState([]);
@@ -19,10 +19,14 @@ const Manager = () => {
         const searching = new URLSearchParams(search).get("searching") || "";
 
         let url = searching ? `/movie?searching=${searching}` : "/movie";
+        if (cache.current[url]) {
+            return setMovies(cache.current[url]);
+        }
         axios
             .get(url)
             .then((res) => {
                 setMovies(res.data?.movies);
+                cache.current[url] = res.data?.movies;
             })
             .catch((err) => {
                 toast.error(err?.response?.data?.msg);

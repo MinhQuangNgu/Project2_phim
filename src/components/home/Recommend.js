@@ -8,18 +8,23 @@ import "swiper/css/pagination";
 import SwiperCard from "~/card/SwiperCard";
 import axios from "axios";
 import { toast } from "react-toastify";
-function Recommend() {
+function Recommend({ cache }) {
     const [infor, setInfor] = useState([]);
     useEffect(() => {
         let here = true;
+        const url = "/movie?limit=8";
+        if (cache.current[url]) {
+            return setInfor(cache.current[url]);
+        }
         if (here) {
             axios
-                .get("/movie?limit=8")
+                .get(url)
                 .then((res) => {
                     if (!here) {
                         return;
                     }
                     setInfor(res.data?.movies);
+                    cache.current[url] = res.data?.movies;
                 })
                 .catch((err) => {
                     toast.error(err?.response?.data?.msg);

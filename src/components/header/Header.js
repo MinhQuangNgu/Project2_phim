@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Navbar from "./Navbar";
 import "./style.css";
-function Header({ setTurnSlide }) {
+function Header({ setTurnSlide, cache }) {
     const searchingRef = useRef();
     const searchingPcRef = useRef();
     const [searching, setSearching] = useState(true);
@@ -13,8 +12,11 @@ function Header({ setTurnSlide }) {
     const [countries, setCountries] = useState([]);
     useEffect(() => {
         let here = true;
+        const url = "/kind";
+        if (cache.current[url]) {
+            return setKinds(cache.current[url]);
+        }
         if (here) {
-            const url = "/kind";
             axios
                 .get(url)
                 .then((res) => {
@@ -22,6 +24,7 @@ function Header({ setTurnSlide }) {
                         return;
                     }
                     setKinds(res.data.kinds);
+                    cache.current[url] = res.data.kinds;
                 })
                 .catch((err) => {
                     toast.error(err?.response?.data?.msg);
@@ -33,8 +36,11 @@ function Header({ setTurnSlide }) {
     }, []);
     useEffect(() => {
         let here = true;
+        const url = "/country";
+        if (cache.current[url]) {
+            return setCountries(cache.current[url]);
+        }
         if (here) {
-            const url = "/country";
             axios
                 .get(url)
                 .then((res) => {
@@ -42,6 +48,7 @@ function Header({ setTurnSlide }) {
                         return;
                     }
                     setCountries(res.data.countries);
+                    cache.current[url] = res.data.countries;
                 })
                 .catch((err) => {
                     toast.error(err?.response?.data?.msg);

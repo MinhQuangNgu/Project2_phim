@@ -6,7 +6,7 @@ import Comment from "~/comment/Comment";
 import NotFound from "~/notfound/NotFound";
 import "./style.css";
 
-const Watch = () => {
+const Watch = ({ cache }) => {
     const { slug } = useParams();
 
     const [movie, setMovie] = useState({});
@@ -31,15 +31,18 @@ const Watch = () => {
     useEffect(() => {
         let here = true;
         let url = `/movie/getone/${slug}`;
+        if (cache.current[url]) {
+            return setMovie(cache.current[url]);
+        }
         if (here) {
             axios
                 .get(url)
                 .then((res) => {
                     if (!res.data?.movie) {
-                        console.log(res.data?.movie);
                         setCheck(true);
                     }
                     setMovie(res.data?.movie);
+                    cache.current[url] = res.data?.movie;
                 })
                 .catch((err) => {
                     setCheck(true);

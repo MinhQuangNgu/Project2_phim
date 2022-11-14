@@ -6,7 +6,7 @@ import Comment from "~/comment/Comment";
 import NotFound from "~/notfound/NotFound";
 import "./style.css";
 
-const MovieDetail = () => {
+const MovieDetail = ({ cache }) => {
     const { slug } = useParams();
 
     const kindRef = useRef("");
@@ -36,6 +36,19 @@ const MovieDetail = () => {
     useEffect(() => {
         let here = true;
         let url = `/movie/getone/${slug}`;
+        if (cache.current[url]) {
+            setMovie(cache.current[url]);
+            if (!kindRef.current) {
+                cache.current[url]?.kinds?.forEach((item, index) => {
+                    if (index !== cache.current[url]?.kinds.length - 1) {
+                        kindRef.current = kindRef.current + item?.title + " - ";
+                    } else {
+                        kindRef.current = kindRef.current + item?.title;
+                    }
+                });
+            }
+            return;
+        }
         if (here) {
             axios
                 .get(url)
@@ -47,6 +60,7 @@ const MovieDetail = () => {
                         setCheck(true);
                     }
                     setMovie(res.data?.movie);
+                    cache.current[url] = res.data?.movie;
                     if (!kindRef.current) {
                         res.data.movie?.kinds?.forEach((item, index) => {
                             if (index !== res.data.movie?.kinds.length - 1) {

@@ -5,10 +5,13 @@ import { toast } from "react-toastify";
 import Card from "~/card/Card";
 import "./style.css";
 
-function Categary({ name, url, urlAl }) {
+function Categary({ name, url, urlAl, cache }) {
     const [infor, setInfor] = useState([]);
     useEffect(() => {
         let here = true;
+        if (cache.current[url]) {
+            return setInfor(cache.current[url]);
+        }
         if (here) {
             axios
                 .get(url)
@@ -17,6 +20,7 @@ function Categary({ name, url, urlAl }) {
                         return;
                     }
                     setInfor(res.data?.movies);
+                    cache.current[url] = res.data?.movies;
                 })
                 .catch((err) => {
                     toast.error(err?.response?.data?.msg);

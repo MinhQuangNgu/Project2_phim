@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const SlideSideMobile = ({ typeCheck }) => {
+const SlideSideMobile = ({ typeCheck, items, type, setTurnSlide }) => {
     return (
         <ul
             className={
@@ -10,24 +10,37 @@ const SlideSideMobile = ({ typeCheck }) => {
                     : "type_mobile_container type_mobile_container-hidden"
             }
         >
-            <Link className="type_mobile-itemstype" to="/">
-                <li className="type_mobile-item_type">Hành động</li>
-            </Link>
-            <Link className="type_mobile-itemstype" to="/">
-                <li className="type_mobile-item_type">Hành động</li>
-            </Link>
-            <Link className="type_mobile-itemstype" to="/">
-                <li className="type_mobile-item_type">Hành động</li>
-            </Link>
-            <Link className="type_mobile-itemstype" to="/">
-                <li className="type_mobile-item_type">Hành động</li>
-            </Link>
-            <Link className="type_mobile-itemstype" to="/">
-                <li className="type_mobile-item_type">Hành động</li>
-            </Link>
-            <Link className="type_mobile-itemstype" to="/">
-                <li className="type_mobile-item_type">Hành động</li>
-            </Link>
+            {type !== "kinds"
+                ? items?.map((item) => (
+                      <Link
+                          className="type_mobile-itemstype"
+                          to={`/tim-kiem?${type}=${item?.slug}`}
+                      >
+                          <li
+                              onClick={() => {
+                                  setTurnSlide(false);
+                              }}
+                              className="type_mobile-item_type"
+                          >
+                              {item?.name}
+                          </li>
+                      </Link>
+                  ))
+                : items?.map((item) => (
+                      <Link
+                          className="type_mobile-itemstype"
+                          to={`/tim-kiem?${type}=${item?.slug}`}
+                      >
+                          <li
+                              onClick={() => {
+                                  setTurnSlide(false);
+                              }}
+                              className="type_mobile-item_type"
+                          >
+                              {item?.title}
+                          </li>
+                      </Link>
+                  ))}
         </ul>
     );
 };
