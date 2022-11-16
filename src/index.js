@@ -8,11 +8,23 @@ const router = require("./routes/index");
 
 dotenv.config();
 
-const url = "https://webmovieme.netlify.app/";
-
+dotenv.config();
 app.use(express.json());
+const url = "https://sttruyen.xyz";
 
-app.use(cors({ credentials: true, origin: [url, "http://localhost:3000"] }));
+app.use(
+    cors({
+        credentials: true,
+        origin: [
+            url,
+            "sttruyen.xyz",
+            "www.sttruyen.xyz",
+            "http://sttruyen.xyz",
+            "http://www.sttruyen.xyz",
+            "https://www.sttruyen.xyz",
+        ],
+    })
+);
 
 const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
@@ -20,10 +32,7 @@ const io = require("socket.io")(http, {
         origin: "*",
     },
 });
-
-io.on("connection", (socket) => {
-    console.log(socket);
-});
+io.on("connection", (socket) => {});
 
 mongoose
     .connect(process.env.DATABASE_URL, { useNewUrlParser: true })
@@ -38,4 +47,6 @@ const PORT = process.env.PORT || 5000;
 
 router(app);
 
-app.listen(PORT, () => console.log("connected to port 5000"));
+http.listen(PORT, () => {
+    console.log("connected to port 5000");
+});
