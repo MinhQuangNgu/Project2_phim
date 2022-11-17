@@ -17,8 +17,8 @@ app.use(
     cors({
         credentials: true,
         origin: [
-            url,
             "sttruyen.xyz",
+            url,
             "www.sttruyen.xyz",
             "http://sttruyen.xyz",
             "http://www.sttruyen.xyz",
