@@ -95,7 +95,7 @@ function Header({ setTurnSlide, cache }) {
                                     </Link>
                                     <Link
                                         className="header_navbar-link-wrap"
-                                        to="/tim-kiem?sort=watching"
+                                        to="/tim-kiem?sort=-watching"
                                     >
                                         <li>Phim Top</li>
                                     </Link>

@@ -7,9 +7,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./redux/store";
 import { Provider } from "react-redux";
 import axios from "axios";
+import { url } from "./url/Url";
 
-//axios.defaults.baseURL = "https://movie-backend-ob5f.onrender.com/";
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = url;
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(

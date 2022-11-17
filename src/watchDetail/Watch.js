@@ -3,10 +3,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { io } from "socket.io-client";
 import Comment from "~/comment/Comment";
 import NotFound from "~/notfound/NotFound";
 import { isFailing, isLoading, isSuccess } from "~/redux/slice/auth";
 import "./style.css";
+import { url } from "~/url/Url";
 
 const Watch = ({ cache }) => {
     const { slug } = useParams();
@@ -15,6 +17,7 @@ const Watch = ({ cache }) => {
 
     const [movie, setMovie] = useState({});
     const [check, setCheck] = useState(false);
+    const [socket, setSocket] = useState();
 
     const [chap, setChap] = useState(1);
 
@@ -31,6 +34,14 @@ const Watch = ({ cache }) => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [slug, search]);
+
+    useEffect(() => {
+        const socket = io(url);
+        setSocket(socket);
+        return () => {
+            socket.close();
+        };
+    }, []);
 
     useEffect(() => {
         let here = true;
@@ -60,6 +71,16 @@ const Watch = ({ cache }) => {
             here = false;
         };
     }, [slug]);
+
+    useEffect(() => {
+        if (socket) {
+            setTimeout(() => {
+                socket.emit("watching", {
+                    slug,
+                });
+            }, 60000);
+        }
+    }, [socket]);
     return (
         <>
             {!check ? (
