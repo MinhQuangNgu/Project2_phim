@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
 const router = require("./routes/index");
+const Movie = require("./model/Movie");
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(
             "http://sttruyen.xyz",
             "http://www.sttruyen.xyz",
             "https://www.sttruyen.xyz",
+            "http://localhost:3000",
         ],
     })
 );
@@ -32,7 +34,21 @@ const io = require("socket.io")(http, {
         origin: "*",
     },
 });
-io.on("connection", (socket) => {});
+io.on("connection", (socket) => {
+    socket.on("watching", async (infor) => {
+        try {
+            const movie = await Movie.findOne({ slug: infor.slug });
+            await Movie.findOneAndUpdate(
+                { slug: infor.slug },
+                {
+                    watching: movie.watching + 1,
+                }
+            );
+        } catch (err) {
+            return;
+        }
+    });
+});
 
 mongoose
     .connect(process.env.DATABASE_URL, { useNewUrlParser: true })
