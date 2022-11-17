@@ -276,6 +276,25 @@ class movieController {
             return res.status(500).json({ msg: err.message });
         }
     }
+
+    async updateWatching(req, res) {
+        try {
+            const { slug } = req.params;
+            const movie = await Movie.findOne({ slug });
+            if (!movie) {
+                return res.status(400).json({ msg: "No movie found." });
+            }
+            await Movie.findOneAndUpdate(
+                { slug },
+                {
+                    watching: movie.watching + 1,
+                }
+            );
+            return res.status(200).json({ msg: "watching successfully." });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    }
 }
 
 module.exports = new movieController();

@@ -23,7 +23,6 @@ app.use(
             "http://sttruyen.xyz",
             "http://www.sttruyen.xyz",
             "https://www.sttruyen.xyz",
-            "http://localhost:3000",
         ],
     })
 );

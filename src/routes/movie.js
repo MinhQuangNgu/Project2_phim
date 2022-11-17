@@ -17,6 +17,7 @@ router.delete(
     middleWareController.verifyAdmin,
     movieController.deleteMovie
 );
+router.get("/watch/:slug", movieController.updateWatching);
 router.get("/", movieController.getMovie);
 
 module.exports = router;
