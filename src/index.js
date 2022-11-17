@@ -8,6 +8,7 @@ import { store, persistor } from "./redux/store";
 import { Provider } from "react-redux";
 import axios from "axios";
 
+//axios.defaults.baseURL = "https://movie-backend-ob5f.onrender.com/";
 axios.defaults.baseURL = "http://localhost:5000";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

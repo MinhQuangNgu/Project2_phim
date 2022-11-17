@@ -13,6 +13,7 @@ const SlideSideMobile = ({ typeCheck, items, type, setTurnSlide }) => {
             {type !== "kinds"
                 ? items?.map((item) => (
                       <Link
+                          key={item?._id + "abd"}
                           className="type_mobile-itemstype"
                           to={`/tim-kiem?${type}=${item?.slug}`}
                       >
@@ -28,6 +29,7 @@ const SlideSideMobile = ({ typeCheck, items, type, setTurnSlide }) => {
                   ))
                 : items?.map((item) => (
                       <Link
+                          key={item?._id + "acd"}
                           className="type_mobile-itemstype"
                           to={`/tim-kiem?${type}=${item?.slug}`}
                       >

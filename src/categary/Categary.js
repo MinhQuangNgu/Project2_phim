@@ -26,6 +26,12 @@ function Categary({ name, url, urlAl, cache }) {
                     }
                     setInfor(res.data?.movies);
                     cache.current[url] = res.data?.movies;
+                    res.data?.movies?.forEach((item) => {
+                        let urlChapter = `/movie/getone/${item?.slug}`;
+                        if (!cache.current[urlChapter]) {
+                            cache.current[urlChapter] = item;
+                        }
+                    });
                     dispatch(isSuccess());
                 })
                 .catch((err) => {
