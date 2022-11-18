@@ -9,6 +9,7 @@ import NotFound from "~/notfound/NotFound";
 import { isFailing, isLoading, isSuccess } from "~/redux/slice/auth";
 import "./style.css";
 import { url } from "~/url/Url";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const Watch = ({ cache }) => {
     const { slug } = useParams();
@@ -72,17 +73,41 @@ const Watch = ({ cache }) => {
         };
     }, [slug]);
 
+    const updateWatching = async () => {
+        try {
+            await axios.get(`/movie/watch/${slug}`);
+        } catch (err) {}
+    };
+
     useEffect(() => {
         if (socket) {
             setTimeout(() => {
-                socket.emit("watching", {
-                    slug,
-                });
+                updateWatching();
             }, 60000);
         }
     }, [socket]);
     return (
         <>
+            <HelmetProvider>
+                <Helmet>
+                    <title>
+                        {movie?.title +
+                            ` Tập ${
+                                movie?.type === "phim-le" ? "Full" : chap
+                            }` || "Thế Giới Phim"}
+                    </title>
+                    <link
+                        rel="canonical"
+                        href={`https://sttruyen.xyz/xem-phim/${slug}`}
+                    />
+                    <meta
+                        content={
+                            movie?.content ||
+                            "Sttruyen là web xem phim mọi thể loại."
+                        }
+                    />
+                </Helmet>
+            </HelmetProvider>
             {!check ? (
                 <div className="watch_container">
                     <div className="grid wideS">

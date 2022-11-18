@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,6 +14,7 @@ const Search = ({ cache }) => {
     const dispatch = useDispatch();
     const [kinds, setKinds] = useState([]);
     const [countries, setCountries] = useState([]);
+    const [updatePS, setUpdatePC] = useState(false);
     const navigate = useNavigate();
 
     const countRef = useRef(1);
@@ -40,6 +42,7 @@ const Search = ({ cache }) => {
         });
 
         const searching = new URLSearchParams(searchForm).toString();
+        setUpdatePC(!updatePS);
         navigate(`?${searching}`);
     };
 
@@ -104,6 +107,12 @@ const Search = ({ cache }) => {
             .then((res) => {
                 dispatch(isSuccess());
                 setMovies(res.data);
+                res.data?.movies?.forEach((item) => {
+                    let urlChapter = `/movie/getone/${item?.slug}`;
+                    if (!cache.current[urlChapter]) {
+                        cache.current[urlChapter] = item;
+                    }
+                });
                 cache.current[url] = res.data;
                 countRef.current = res.data?.count;
             })
@@ -114,6 +123,16 @@ const Search = ({ cache }) => {
 
     return (
         <div className="search_container">
+            <HelmetProvider>
+                <Helmet>
+                    <title>Tìm Kiếm Phim</title>
+                    <link
+                        rel="canonical"
+                        href={`https://sttruyen.xyz/tim-kiem`}
+                    />
+                    <meta content={"Tìm kiếm phim hay."} />
+                </Helmet>
+            </HelmetProvider>
             <div className="grid wide">
                 <div className="search_filter_container">
                     <select
@@ -190,7 +209,11 @@ const Search = ({ cache }) => {
                 </div>
             </div>
             {movies?.count && (
-                <Paginating count={countRef.current} limit={20} />
+                <Paginating
+                    updatePS={updatePS}
+                    count={countRef.current}
+                    limit={20}
+                />
             )}
         </div>
     );

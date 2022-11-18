@@ -47,7 +47,7 @@ function Categary({ name, url, urlAl, cache }) {
     return (
         <div className="categary_container">
             <div className="categary_title">
-                <Link className="categary_title-link" to="/">
+                <Link className="categary_title-link" to={urlAl}>
                     <h1>{name}</h1>
                 </Link>
                 <Link to={urlAl} className="categary_watchAll-container">

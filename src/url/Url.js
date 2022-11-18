@@ -1,3 +1,3 @@
-const baseUr = "https://movie-backend-ob5f.onrender.com/";
+const baseUr = "https://movie-website-backend.vercel.app/";
 
-export const url = "http://localhost:5000";
+export const url = "https://movie-website-backend.vercel.app/";

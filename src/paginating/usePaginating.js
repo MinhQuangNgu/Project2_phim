@@ -8,6 +8,8 @@ const usePaginating = ({ count, limit }) => {
     const [firstArr, setFirstArr] = useState([]);
     const [lastArr, setLastArr] = useState([]);
 
+    const [updateP, setUpdateP] = useState(false);
+
     const { search } = useLocation();
 
     useEffect(() => {
@@ -28,6 +30,10 @@ const usePaginating = ({ count, limit }) => {
             setLastArr([]);
         }
     }, [page, search, count, limit]);
+
+    useEffect(() => {
+        setPage(1);
+    }, [updateP]);
 
     const prev = () => {
         setPage(Math.max(page - 1, 1));
@@ -54,6 +60,8 @@ const usePaginating = ({ count, limit }) => {
         activePage,
         nex,
         prev,
+        setUpdateP,
+        updateP,
     };
 };
 

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -12,6 +13,15 @@ const MovieDetail = ({ cache }) => {
     const { slug } = useParams();
 
     const dispatch = useDispatch();
+
+    const stars = Array(10).fill(0);
+
+    const [currentStar, setCurrentStar] = useState(10);
+    const [hoverStar, setHoverStar] = useState(undefined);
+
+    const handleClickStar = (e) => {
+        setCurrentStar(e);
+    };
 
     const kindRef = useRef("");
 
@@ -90,6 +100,21 @@ const MovieDetail = ({ cache }) => {
     }, [slug]);
     return (
         <>
+            <HelmetProvider>
+                <Helmet>
+                    <title>{movie?.title || "Thế Giới Phim"}</title>
+                    <link
+                        rel="canonical"
+                        href={`https://sttruyen.xyz/phim/${slug}`}
+                    />
+                    <meta
+                        content={
+                            movie?.content ||
+                            "Sttruyen là web xem phim mọi thể loại."
+                        }
+                    />
+                </Helmet>
+            </HelmetProvider>
             {!check ? (
                 <div className="movie_detail_container">
                     <div className="grid wideS">
@@ -131,28 +156,79 @@ const MovieDetail = ({ cache }) => {
                             <div className="movie_infor-more_container">
                                 <div className="movie_infor-more_rating_container">
                                     <div className="movie_infor-more_rating_wrap">
-                                        <i className="fa-regular fa-star"></i>
-                                        <i className="fa-regular fa-star"></i>
-                                        <i className="fa-regular fa-star"></i>
-                                        <i className="fa-regular fa-star"></i>
-                                        <i className="fa-regular fa-star"></i>
-                                        <i className="fa-regular fa-star"></i>
-                                        <i className="fa-regular fa-star"></i>
-                                        <i className="fa-regular fa-star"></i>
-                                        <i className="fa-regular fa-star"></i>
-                                        <i className="fa-regular fa-star"></i>
-                                        <div className="movie_infor-more-rating_star">
-                                            <i className="fa-solid fa-star"></i>
-                                            <i className="fa-solid fa-star"></i>
-                                            <i className="fa-solid fa-star"></i>
-                                            <i className="fa-solid fa-star"></i>
-                                            <i className="fa-solid fa-star"></i>
-                                            <i className="fa-solid fa-star"></i>
-                                            <i className="fa-solid fa-star"></i>
-                                            <i className="fa-solid fa-star"></i>
-                                            <i className="fa-solid fa-star"></i>
-                                            <i className="fa-solid fa-star"></i>
-                                        </div>
+                                        {stars.map((_, index) => {
+                                            return hoverStar ? (
+                                                hoverStar >= index + 1 ? (
+                                                    <i
+                                                        onClick={() => {
+                                                            handleClickStar(
+                                                                index + 1
+                                                            );
+                                                        }}
+                                                        onMouseOver={() => {
+                                                            setHoverStar(
+                                                                index + 1
+                                                            );
+                                                        }}
+                                                        onMouseLeave={() => {
+                                                            setHoverStar(
+                                                                undefined
+                                                            );
+                                                        }}
+                                                        className="fa-solid fa-star"
+                                                    ></i>
+                                                ) : (
+                                                    <i
+                                                        onClick={() => {
+                                                            handleClickStar(
+                                                                index + 1
+                                                            );
+                                                        }}
+                                                        onMouseOver={() => {
+                                                            setHoverStar(
+                                                                index + 1
+                                                            );
+                                                        }}
+                                                        onMouseLeave={() => {
+                                                            setHoverStar(
+                                                                undefined
+                                                            );
+                                                        }}
+                                                        className="fa-regular fa-star"
+                                                    ></i>
+                                                )
+                                            ) : currentStar >= index + 1 ? (
+                                                <i
+                                                    onClick={() => {
+                                                        handleClickStar(
+                                                            index + 1
+                                                        );
+                                                    }}
+                                                    onMouseOver={() => {
+                                                        setHoverStar(index + 1);
+                                                    }}
+                                                    onMouseLeave={() => {
+                                                        setHoverStar(undefined);
+                                                    }}
+                                                    className="fa-solid fa-star"
+                                                ></i>
+                                            ) : (
+                                                <i
+                                                    onClick={() => {
+                                                        handleClickStar(
+                                                            index + 1
+                                                        );
+                                                    }}
+                                                    onMouseOver={() => {
+                                                        setHoverStar(index + 1);
+                                                    }}
+                                                    onMouseLeave={() => {
+                                                        setHoverStar(undefined);
+                                                    }}
+                                                    className="fa-regular fa-star"
+                                                ></i>
+                                            );
+                                        })}
                                     </div>
                                 </div>
                                 <div className="movie_infor-more_detail_container">
@@ -166,6 +242,7 @@ const MovieDetail = ({ cache }) => {
                                             Quốc gia: {movie?.country?.name}
                                         </li>
                                         <li>Thể loại: {kindRef.current}</li>
+                                        <li>Lượt xem: {movie?.watching}</li>
                                     </ul>
                                     <div className="movie_content-container">
                                         <h3>Nội dung phim</h3>

@@ -3,13 +3,26 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./style.css";
 import usePaginating from "./usePaginating";
 
-const Paginating = ({ count, limit }) => {
-    const { prev, next, jump, firstArr, lastArr, activePage, page } =
-        usePaginating({
-            count: count || 20,
-            limit: limit || 20,
-        });
+const Paginating = ({ count, limit, updatePS }) => {
+    const {
+        prev,
+        next,
+        jump,
+        firstArr,
+        lastArr,
+        activePage,
+        page,
+        setUpdateP,
+        updateP,
+    } = usePaginating({
+        count: count || 20,
+        limit: limit || 20,
+    });
     const { search } = useLocation();
+
+    useEffect(() => {
+        setUpdateP(!updateP);
+    }, [updatePS]);
 
     const navigate = useNavigate();
 

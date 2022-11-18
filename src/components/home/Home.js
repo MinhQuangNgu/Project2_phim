@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import Categary from "~/categary/Categary";
 import Recommend from "./Recommend";
 import "./style.css";
@@ -6,6 +7,13 @@ import "./style.css";
 function Home({ cache }) {
     return (
         <div className="home_container">
+            <HelmetProvider>
+                <Helmet>
+                    <title>Thế Giới Phim</title>
+                    <link rel="canonical" href="https//sttruyen.xyz" />
+                    <meta content="Sttruyen là web xem phim mọi thể loại.Chúng tôi hy vọng rằng bạn sẽ có 1 buổi xem phim thật tuyệt vời." />
+                </Helmet>
+            </HelmetProvider>
             <div className="grid wide">
                 <Recommend cache={cache} />
                 <Categary
