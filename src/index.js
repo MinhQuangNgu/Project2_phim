@@ -11,7 +11,6 @@ dotenv.config();
 
 dotenv.config();
 app.use(express.json());
-const url = "https://sttruyen.xyz";
 
 app.use(
     cors({
@@ -27,28 +26,6 @@ app.use(
     })
 );
 
-const http = require("http").createServer(app);
-const io = require("socket.io")(http, {
-    cors: {
-        origin: "*",
-    },
-});
-io.on("connection", (socket) => {
-    socket.on("watching", async (infor) => {
-        try {
-            const movie = await Movie.findOne({ slug: infor.slug });
-            await Movie.findOneAndUpdate(
-                { slug: infor.slug },
-                {
-                    watching: movie.watching + 1,
-                }
-            );
-        } catch (err) {
-            return;
-        }
-    });
-});
-
 mongoose
     .connect(process.env.DATABASE_URL, { useNewUrlParser: true })
     .then((res) => {
@@ -62,6 +39,6 @@ const PORT = process.env.PORT || 5000;
 
 router(app);
 
-http.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log("connected to port 5000");
 });
