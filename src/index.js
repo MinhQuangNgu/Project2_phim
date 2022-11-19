@@ -18,7 +18,7 @@ app.use(
         credentials: true,
         origin: [
             "sttruyen.xyz",
-            url,
+            "https://sttruyen.xyz",
             "www.sttruyen.xyz",
             "http://sttruyen.xyz",
             "http://www.sttruyen.xyz",
