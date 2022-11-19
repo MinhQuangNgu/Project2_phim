@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
@@ -11,8 +10,7 @@ dotenv.config();
 
 dotenv.config();
 app.use(express.json());
-
-var allowedDomains = [
+var whitelist = [
     "sttruyen.xyz",
     "https://sttruyen.xyz",
     "www.sttruyen.xyz",
@@ -20,19 +18,15 @@ var allowedDomains = [
     "http://www.sttruyen.xyz",
     "https://www.sttruyen.xyz",
 ];
-app.use(
-    cors({
-        origin: function (origin, callback) {
-            if (!origin) return callback(null, true);
-
-            if (allowedDomains.indexOf(origin) === -1) {
-                var msg = `This site ${origin} does not have an access. Only specific domains are allowed to access it.`;
-                return callback(new Error(msg), false);
-            }
-            return callback(null, true);
-        },
-    })
-);
+var corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+};
 
 mongoose
     .connect(process.env.DATABASE_URL, { useNewUrlParser: true })
@@ -50,3 +44,5 @@ router(app);
 app.listen(PORT, () => {
     console.log("connected to port 5000");
 });
+
+exports.module = corsOptions;
