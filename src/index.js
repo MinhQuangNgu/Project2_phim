@@ -15,14 +15,7 @@ app.use(express.json());
 app.use(
     cors({
         credentials: true,
-        origin: [
-            "https://sttruyen.xyz",
-            "sttruyen.xyz",
-            "www.sttruyen.xyz",
-            "http://sttruyen.xyz",
-            "http://www.sttruyen.xyz",
-            "https://www.sttruyen.xyz",
-        ],
+        origin: ["https://sttruyen.xyz", "https://www.sttruyen.xyz"],
     })
 );
 
