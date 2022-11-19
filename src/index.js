@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
@@ -10,23 +11,21 @@ dotenv.config();
 
 dotenv.config();
 app.use(express.json());
-var whitelist = [
-    "sttruyen.xyz",
-    "https://sttruyen.xyz",
-    "www.sttruyen.xyz",
-    "http://sttruyen.xyz",
-    "http://www.sttruyen.xyz",
-    "https://www.sttruyen.xyz",
-];
-var corsOptions = {
-    origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-};
+
+app.use(
+    cors({
+        credentials: true,
+        origin: [
+            "sttruyen.xyz",
+            "https://sttruyen.xyz",
+            "www.sttruyen.xyz",
+            "http://sttruyen.xyz",
+            "http://www.sttruyen.xyz",
+            "https://www.sttruyen.xyz",
+        ],
+        optionsSuccessStatus: 200,
+    })
+);
 
 mongoose
     .connect(process.env.DATABASE_URL, { useNewUrlParser: true })
@@ -44,5 +43,3 @@ router(app);
 app.listen(PORT, () => {
     console.log("connected to port 5000");
 });
-
-exports.module = corsOptions;
