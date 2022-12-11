@@ -44,10 +44,6 @@ const MovieDetail = ({ cache }) => {
     const [check, setCheck] = useState(false);
 
     useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [slug]);
-
-    useEffect(() => {
         let here = true;
         let url = `/movie/getone/${slug}`;
         if (cache.current[url]) {
@@ -102,7 +98,7 @@ const MovieDetail = ({ cache }) => {
         <>
             <HelmetProvider>
                 <Helmet>
-                    <title>{movie?.title || "Thế Giới Phim"}</title>
+                    <title>{movie ? movie?.title : "Thế Giới Phim"}</title>
                     <link
                         rel="canonical"
                         href={`https://sttruyen.xyz/phim/${slug}`}
@@ -160,6 +156,7 @@ const MovieDetail = ({ cache }) => {
                                             return hoverStar ? (
                                                 hoverStar >= index + 1 ? (
                                                     <i
+                                                        key={index + "asds"}
                                                         onClick={() => {
                                                             handleClickStar(
                                                                 index + 1
@@ -179,6 +176,7 @@ const MovieDetail = ({ cache }) => {
                                                     ></i>
                                                 ) : (
                                                     <i
+                                                        key={index + "asdss"}
                                                         onClick={() => {
                                                             handleClickStar(
                                                                 index + 1
@@ -199,6 +197,7 @@ const MovieDetail = ({ cache }) => {
                                                 )
                                             ) : currentStar >= index + 1 ? (
                                                 <i
+                                                    key={index + "asdsz"}
                                                     onClick={() => {
                                                         handleClickStar(
                                                             index + 1
@@ -214,6 +213,7 @@ const MovieDetail = ({ cache }) => {
                                                 ></i>
                                             ) : (
                                                 <i
+                                                    key={index + "asdsa"}
                                                     onClick={() => {
                                                         handleClickStar(
                                                             index + 1

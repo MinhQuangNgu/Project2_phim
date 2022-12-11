@@ -11,7 +11,11 @@ import { url } from "./url/Url";
 
 axios.defaults.baseURL = url;
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
+if (process.env.NODE_ENV === "production") {
+    console.log = () => {};
+    console.error = () => {};
+    console.debug = () => {};
+}
 root.render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>

@@ -81,7 +81,8 @@ const MovieCreate = ({ cache }) => {
                 "https://api.cloudinary.com/v1_1/sttruyen/image/upload",
                 formData
             );
-            movie.image = res.data.url;
+            const newUrl = "https:" + res.data.url.split(":")[1];
+            movie.image = newUrl;
         } catch (err) {
             return dispatch(isFailing());
         }

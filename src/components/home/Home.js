@@ -18,9 +18,9 @@ function Home({ cache }) {
                 <Recommend cache={cache} />
                 <Categary
                     cache={cache}
-                    urlAl="/tim-kiem?sort=watch"
+                    urlAl="/tim-kiem?sort=-watching"
                     name="Phim Top"
-                    url="/movie?sort=watch&limit=8"
+                    url="/movie?sort=-watching&limit=8"
                 />
                 <Categary
                     cache={cache}

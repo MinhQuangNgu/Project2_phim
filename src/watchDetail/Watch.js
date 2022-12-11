@@ -3,12 +3,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { io } from "socket.io-client";
 import Comment from "~/comment/Comment";
 import NotFound from "~/notfound/NotFound";
 import { isFailing, isLoading, isSuccess } from "~/redux/slice/auth";
 import "./style.css";
-import { url } from "~/url/Url";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const Watch = ({ cache }) => {
@@ -18,9 +16,10 @@ const Watch = ({ cache }) => {
 
     const [movie, setMovie] = useState({});
     const [check, setCheck] = useState(false);
-    const [socket, setSocket] = useState();
 
     const [chap, setChap] = useState(1);
+
+    const countRef = useRef(0);
 
     const chapRef = useRef(1);
 
@@ -35,14 +34,6 @@ const Watch = ({ cache }) => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [slug, search]);
-
-    useEffect(() => {
-        const socket = io(url);
-        setSocket(socket);
-        return () => {
-            socket.close();
-        };
-    }, []);
 
     useEffect(() => {
         let here = true;
@@ -80,21 +71,30 @@ const Watch = ({ cache }) => {
     };
 
     useEffect(() => {
-        if (socket) {
+        if (countRef.current === 0) {
             setTimeout(() => {
                 updateWatching();
-            }, 60000);
+            }, 300000);
         }
-    }, [socket]);
+        return () => {
+            countRef.current++;
+        };
+    }, [slug]);
+
+    useEffect(() => {
+        countRef.current = 0;
+    }, [slug]);
     return (
         <>
             <HelmetProvider>
                 <Helmet>
                     <title>
-                        {movie?.title +
-                            ` Tập ${
-                                movie?.type === "phim-le" ? "Full" : chap
-                            }` || "Thế Giới Phim"}
+                        {movie
+                            ? movie?.title +
+                              ` Tập ${
+                                  movie?.type === "phim-le" ? "Full" : chap
+                              }`
+                            : "Thế Giới Phim"}
                     </title>
                     <link
                         rel="canonical"
@@ -146,7 +146,10 @@ const Watch = ({ cache }) => {
                                     allowFullScreen
                                 ></iframe>
                                 <div className="watcher_name_wrap">
-                                    <h3>Phi Cơ Siêu Đẳng (Mavel Rick 2022)</h3>
+                                    <h3>
+                                        {movie?.title} ({movie?.engTitle}{" "}
+                                        {movie?.year})
+                                    </h3>
                                 </div>
                                 {movie?.type === "phim-le" ? (
                                     <div className="episode_container">

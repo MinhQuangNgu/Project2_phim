@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Card from "~/card/Card";
+import NotFound from "~/notfound/NotFound";
 import Paginating from "~/paginating/Paginating";
 import { isFailing, isLoading, isSuccess } from "~/redux/slice/auth";
 import "./style.css";
@@ -15,6 +16,7 @@ const Search = ({ cache }) => {
     const [kinds, setKinds] = useState([]);
     const [countries, setCountries] = useState([]);
     const [updatePS, setUpdatePC] = useState(false);
+    const [failing, setFailing] = useState(false);
     const navigate = useNavigate();
 
     const countRef = useRef(1);
@@ -64,6 +66,7 @@ const Search = ({ cache }) => {
                     cache.current[url] = res.data.kinds;
                 })
                 .catch((err) => {
+                    setFailing(true);
                     toast.error(err?.response?.data?.msg);
                 });
         }
@@ -86,6 +89,7 @@ const Search = ({ cache }) => {
                 })
                 .catch((err) => {
                     dispatch(isFailing());
+                    setFailing(true);
                     toast.error(err?.response?.data?.msg);
                 });
         }
@@ -118,104 +122,116 @@ const Search = ({ cache }) => {
             })
             .catch(() => {
                 dispatch(isFailing());
+                setFailing(true);
             });
     }, [search]);
 
     return (
-        <div className="search_container">
-            <HelmetProvider>
-                <Helmet>
-                    <title>Tìm Kiếm Phim</title>
-                    <link
-                        rel="canonical"
-                        href={`https://sttruyen.xyz/tim-kiem`}
-                    />
-                    <meta content={"Tìm kiếm phim hay."} />
-                </Helmet>
-            </HelmetProvider>
-            <div className="grid wide">
-                <div className="search_filter_container">
-                    <select
-                        ref={sortRef}
-                        name="sort"
-                        className="search_filter-select"
-                    >
-                        <option value="">Phim mới</option>
-                        <option value="createdAt">Phim cũ</option>
-                        <option value="-watching">Xem nhiều nhất</option>
-                        <option value="watching">Xem ít nhất</option>
-                    </select>
-                    <select
-                        ref={kindRef}
-                        name="the-loai"
-                        className="search_filter-select"
-                    >
-                        <option value="">Thể Loại</option>
-                        {kinds?.map((item) => (
-                            <option
-                                value={item?.slug}
-                                key={item?._id + "kinds"}
+        <>
+            {failing ? (
+                <NotFound />
+            ) : (
+                <div className="search_container">
+                    <HelmetProvider>
+                        <Helmet>
+                            <title>Tìm Kiếm Phim</title>
+                            <link
+                                rel="canonical"
+                                href={`https://sttruyen.xyz/tim-kiem`}
+                            />
+                            <meta content={"Tìm kiếm phim hay."} />
+                        </Helmet>
+                    </HelmetProvider>
+                    <div className="grid wide">
+                        <div className="search_filter_container">
+                            <select
+                                ref={sortRef}
+                                name="sort"
+                                className="search_filter-select"
                             >
-                                {item?.title}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        ref={countryRef}
-                        name="quoc-gia"
-                        className="search_filter-select"
-                    >
-                        <option value="">Quốc gia</option>
-                        {countries?.map((item) => (
-                            <option
-                                value={item?.slug}
-                                key={item?._id + "kinds"}
+                                <option value="">Phim mới</option>
+                                <option value="createdAt">Phim cũ</option>
+                                <option value="-watching">
+                                    Xem nhiều nhất
+                                </option>
+                                <option value="watching">Xem ít nhất</option>
+                            </select>
+                            <select
+                                ref={kindRef}
+                                name="the-loai"
+                                className="search_filter-select"
                             >
-                                {item?.name}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        ref={typeRef}
-                        name="type"
-                        className="search_filter-select"
-                    >
-                        <option value="">Tất cả</option>
-                        <option value="phim-le">Phim lẻ</option>
-                        <option value="phim-bo">Phim bộ</option>
-                        <option value="anime">Anime</option>
-                    </select>
-                    <button onClick={handleSearching} className="search_button">
-                        Tìm Kiếm
-                    </button>
-                </div>
-                <div className="search_items_container">
-                    {movies?.movies?.length == 0 ? (
-                        <div className="warning_movies">
-                            Không có phim bạn muốn tìm.
+                                <option value="">Thể Loại</option>
+                                {kinds?.map((item) => (
+                                    <option
+                                        value={item?.slug}
+                                        key={item?._id + "kinds"}
+                                    >
+                                        {item?.title}
+                                    </option>
+                                ))}
+                            </select>
+                            <select
+                                ref={countryRef}
+                                name="quoc-gia"
+                                className="search_filter-select"
+                            >
+                                <option value="">Quốc gia</option>
+                                {countries?.map((item) => (
+                                    <option
+                                        value={item?.slug}
+                                        key={item?._id + "kinds"}
+                                    >
+                                        {item?.name}
+                                    </option>
+                                ))}
+                            </select>
+                            <select
+                                ref={typeRef}
+                                name="type"
+                                className="search_filter-select"
+                            >
+                                <option value="">Tất cả</option>
+                                <option value="phim-le">Phim lẻ</option>
+                                <option value="phim-bo">Phim bộ</option>
+                                <option value="anime">Anime</option>
+                            </select>
+                            <button
+                                onClick={handleSearching}
+                                className="search_button"
+                            >
+                                Tìm Kiếm
+                            </button>
                         </div>
-                    ) : (
-                        <div className="row">
-                            {movies?.movies?.map((item) => (
-                                <div
-                                    key={item?._id + "Searching"}
-                                    className="col c-6 m-4 l-3"
-                                >
-                                    <Card item={item} />
+                        <div className="search_items_container">
+                            {movies?.movies?.length == 0 ? (
+                                <div className="warning_movies">
+                                    Không có phim bạn muốn tìm.
                                 </div>
-                            ))}
+                            ) : (
+                                <div className="row">
+                                    {movies?.movies?.map((item) => (
+                                        <div
+                                            key={item?._id + "Searching"}
+                                            className="col c-6 m-4 l-3"
+                                        >
+                                            <Card item={item} />
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
+                    </div>
+                    {movies?.count && (
+                        <Paginating
+                            updatePS={updatePS}
+                            count={countRef.current}
+                            limit={20}
+                        />
                     )}
                 </div>
-            </div>
-            {movies?.count && (
-                <Paginating
-                    updatePS={updatePS}
-                    count={countRef.current}
-                    limit={20}
-                />
             )}
-        </div>
+        </>
     );
 };
 

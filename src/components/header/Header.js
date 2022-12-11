@@ -204,7 +204,7 @@ function Header({ setTurnSlide, cache }) {
                                         <input
                                             ref={searchingRef}
                                             onKeyDown={(e) => {
-                                                if (e.code === "Enter") {
+                                                if (e.key == "Enter") {
                                                     if (
                                                         searchingRef.current
                                                             .value
